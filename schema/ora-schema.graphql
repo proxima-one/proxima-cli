@@ -1,0 +1,69 @@
+type Query { 
+  SetOwners(fromBlock: Int!): [SetOwner] 
+  Orders(fromBlock: Int!): [Order] 
+  Cancels(fromBlock: Int!): [Cancel] 
+  Trades(fromBlock: Int!): [Trade] 
+  Deposits(fromBlock: Int!): [Deposit] 
+  Withdraws(fromBlock: Int!): [Withdraw] 
+}
+ 
+type SetOwner  { 
+  blockNumber: Int! 
+  previousOwner: String!
+  newOwner: String!
+} 
+
+type Order  { 
+  blockNumber: Int! 
+  tokenBuy: String!
+  amountBuy: Float!
+  tokenSell: String!
+  amountSell: Float!
+  expires: Float!
+  nonce: Float!
+  user: String!
+  v: String!
+  r: String!
+  s: String!
+} 
+
+type Cancel  { 
+  blockNumber: Int! 
+  tokenBuy: String!
+  amountBuy: Float!
+  tokenSell: String!
+  amountSell: Float!
+  expires: Float!
+  nonce: Float!
+  user: String!
+  v: String!
+  r: String!
+  s: String!
+} 
+
+type Trade  { 
+  blockNumber: Int! 
+  tokenBuy: String!
+  amountBuy: Float!
+  tokenSell: String!
+  amountSell: Float!
+  get: String!
+  give: String!
+} 
+
+type Deposit  { 
+  blockNumber: Int! 
+  token: String!
+  user: String!
+  amount: Float!
+  balance: Float!
+} 
+
+type Withdraw  { 
+  blockNumber: Int! 
+  token: String!
+  user: String!
+  amount: Float!
+  balance: Float!
+} 
+

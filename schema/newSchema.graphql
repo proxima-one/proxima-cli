@@ -1,0 +1,41 @@
+type Query {
+  Mints(fromBlock: Int!): [Mint]
+  MintFinisheds(fromBlock: Int!): [MintFinished]
+  Pauses(fromBlock: Int!): [Pause]
+  Unpauses(fromBlock: Int!): [Unpause]
+  Approvals(fromBlock: Int!): [Approval]
+  Transfers(fromBlock: Int!): [Transfer]
+}
+scalar BigInt
+
+type Mint  {
+  blockNumber: Int!
+  to: String!
+  value: Int!
+}
+
+type MintFinished  {
+  blockNumber: Int!
+}
+
+type Pause  {
+  blockNumber: Int!
+}
+
+type Unpause  {
+  blockNumber: Int!
+}
+
+type Approval  {
+  blockNumber: Int!
+  owner: String!
+  spender: String!
+  value: Int!
+}
+
+type Transfer  {
+  blockNumber: Int!
+  from: String!
+  to: String!
+  value: BigInt!
+}
