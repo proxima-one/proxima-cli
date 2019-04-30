@@ -7,13 +7,14 @@
 ```
 git clone https://github.com/chasesmith95/meshcache.git
 cd /meshcache/ora-protocol-cli/
+
 ```
 
 ## Example Usage
 
 ### Initialize
 ```
-ora-protocol init
+node cli init
 ```
 
 Output 
@@ -28,13 +29,13 @@ Completed
 
 
 #### Include ABI Code
-You can include the raw text of the ABI code.
+You can include the raw text of the ABI code. For this instance, we have already loaded an abi code for the IDEX exchange. 
+Featured in abi/idex_abi.json.
 
 
 #### Update Config
 
-For now we look at the config.yml
-
+For now we look at the config.yml to include the contract address, the abi code, and datasource.
 
 
 ```yaml
@@ -48,7 +49,7 @@ owner: Owner
 
 ### Build
 ```
-ora-protocol build
+node cli build
 ```
 
 ```
@@ -66,7 +67,7 @@ Saved!
 
 ## Start
 ```
-ora-protocol start
+node cli start
 ```
 
 ```
@@ -82,5 +83,5 @@ Server is running on http://localhost:4000
 
 ## Deploy
 ```
-ora-protocol deploy
+node cli deploy
 ```
