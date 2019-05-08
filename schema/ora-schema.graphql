@@ -1,69 +1,73 @@
 type Query { 
-  SetOwners(fromBlock: Int!): [SetOwner] 
-  Orders(fromBlock: Int!): [Order] 
-  Cancels(fromBlock: Int!): [Cancel] 
-  Trades(fromBlock: Int!): [Trade] 
-  Deposits(fromBlock: Int!): [Deposit] 
+  Rolls(fromBlock: Int!): [Roll] 
+  Sponsorships(fromBlock: Int!): [Sponsorship] 
+  Jackpots(fromBlock: Int!): [Jackpot] 
+  Faucets(fromBlock: Int!): [Faucet] 
+  Donations(fromBlock: Int!): [Donation] 
+  Reclaims(fromBlock: Int!): [Reclaim] 
+  TrustUpdates(fromBlock: Int!): [TrustUpdate] 
   Withdraws(fromBlock: Int!): [Withdraw] 
+  OwnershipTransferreds(fromBlock: Int!): [OwnershipTransferred] 
 }
  
-type SetOwner  { 
+type Roll  { 
   blockNumber: Int! 
-  previousOwner: String!
-  newOwner: String!
+  block: Float!
+  player: String!
+  wager: Float!
+  rollUnder: Float!
+  dieRoll: Float!
+  profit: Float!
+  payout: Float!
 } 
 
-type Order  { 
+type Sponsorship  { 
   blockNumber: Int! 
-  tokenBuy: String!
-  amountBuy: Float!
-  tokenSell: String!
-  amountSell: Float!
-  expires: Float!
-  nonce: Float!
-  user: String!
-  v: String!
-  r: String!
-  s: String!
-} 
-
-type Cancel  { 
-  blockNumber: Int! 
-  tokenBuy: String!
-  amountBuy: Float!
-  tokenSell: String!
-  amountSell: Float!
-  expires: Float!
-  nonce: Float!
-  user: String!
-  v: String!
-  r: String!
-  s: String!
-} 
-
-type Trade  { 
-  blockNumber: Int! 
-  tokenBuy: String!
-  amountBuy: Float!
-  tokenSell: String!
-  amountSell: Float!
-  get: String!
-  give: String!
-} 
-
-type Deposit  { 
-  blockNumber: Int! 
-  token: String!
-  user: String!
+  executor: String!
+  sender: String!
+  beneficiary: String!
   amount: Float!
-  balance: Float!
+} 
+
+type Jackpot  { 
+  blockNumber: Int! 
+  player: String!
+  amount: Float!
+} 
+
+type Faucet  { 
+  blockNumber: Int! 
+  player: String!
+  amount: Float!
+} 
+
+type Donation  { 
+  blockNumber: Int! 
+  benefactor: String!
+  amount: Float!
+} 
+
+type Reclaim  { 
+  blockNumber: Int! 
+  owner: String!
+  amount: Float!
+} 
+
+type TrustUpdate  { 
+  blockNumber: Int! 
+  previous: String!
+  current: String!
 } 
 
 type Withdraw  { 
   blockNumber: Int! 
-  token: String!
-  user: String!
+  player: String!
   amount: Float!
-  balance: Float!
+} 
+
+type OwnershipTransferred  { 
+  blockNumber: Int! 
+  previousOwner: String!
+  newOwner: String!
 } 
 
