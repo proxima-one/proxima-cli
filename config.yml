@@ -1,6 +1,6 @@
 name: [YOUR Name]
-abi: ./abi/idex_abi.json
-contract: '0x2a0c0DBEcC7E4D658f48E01e3fA353F44050c208'
+abi: ./abi/opensea_abi.json
+contract: '0x7Be8076f4EA4A4AD08075C2508e481d6C946D12b'
 datasource: Ethereum
 id: ID
 owner: Owner

@@ -42,17 +42,19 @@ function main() {
         eventQuery += resp.query
 
         break;
-      /*
+
       case 'function':
         if (chunk.constant) {
-          console.log("function", chunk)
+          console.log("function", chunk.name)
+          console.log("inputs", chunk.inputs)
+          console.log("function", chunk.outputs)
+
         }
 
         break;
-      default:
-        console.log(chunk.type)
+      //default:
+        //console.log(chunk.type)
 
-      */
     }
   }
 
@@ -87,6 +89,7 @@ function eventSchema(contractEvent) {
   let schema = "type "
   schema += contractEvent.name + "  { " + '\n'
   schema += "  blockNumber: Int! \n"
+  schema += "   proof: String \n"
   for (let v = 0; v < contractEvent.inputs.length; v ++) {
     switch(contractEvent.inputs[v].type) {
       case "address":
@@ -124,6 +127,7 @@ function eventResolvers(contractEvent) {
   let funct = "function resolve" + contractEvent.name + "(contractEvent) { \n"
   funct += "  let resp = { \n"
   funct += "    blockNumber: contractEvent.value.blockNumber,\n"
+  funct += "   proof: JSON.stringify(contractEvent.proof),\n"
   for (let v = 0; v < contractEvent.inputs.length; v ++) {
     switch(contractEvent.inputs[v].type) {
       case "address":
@@ -136,6 +140,7 @@ function eventResolvers(contractEvent) {
         funct+= "  " + contractEvent.inputs[v].name + ": " +  "contractEvent.value.returnValues."+contractEvent.inputs[v].name + ',\n'
     }
 }
+
 funct += "} \n"
 funct += '  return resp \n} \n\n'
 return funct

@@ -13,6 +13,7 @@ let contract = web3.eth.Contract(abiCode, contractAddress);
 
 async function getLatest() {
  let blockNumber = await  web3.eth.getBlockNumber();
+ console.log(await contract.methods.name.call())
 contract.getPastEvents('allEvents',{fromBlock: blockNumber-1000, toBlock: 'latest' },
 async function(error, events){
 if (events) {
@@ -25,6 +26,10 @@ let value = await putEvent(contractEvent);
  }
 
  getLatest();
+
+
+
+
 
 async function putEvent(contractEvent) {
   var id = Date.now()
@@ -64,64 +69,39 @@ async function filterContractEvent(name, pred) {
 const resolvers = {
  Query: {
 
-Rolls: async (parent, args) => {
+OrderApprovedPartOnes: async (parent, args) => {
   let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}]
-  let values = await filterContractEvent('Roll', predicate)
-  let v = Math.floor((Math.random() * values.length));
+  let values = await filterContractEvent('OrderApprovedPartOne', predicate)
   for (var i = 0; i < values.length; i++) {
-   values[i] = resolveRoll(values[i])
-   if (i === v) {
-     console.log("Checking: ", values[i].blockNumber)
-   }
+   values[i] = resolveOrderApprovedPartOne(values[i])
 }  return values
 },
-Sponsorships: async (parent, args) => {
+OrderApprovedPartTwos: async (parent, args) => {
   let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}]
-  let values = await filterContractEvent('Sponsorship', predicate)
+  let values = await filterContractEvent('OrderApprovedPartTwo', predicate)
   for (var i = 0; i < values.length; i++) {
-   values[i] = resolveSponsorship(values[i])
+   values[i] = resolveOrderApprovedPartTwo(values[i])
 }  return values
 },
-Jackpots: async (parent, args) => {
+OrderCancelleds: async (parent, args) => {
   let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}]
-  let values = await filterContractEvent('Jackpot', predicate)
+  let values = await filterContractEvent('OrderCancelled', predicate)
   for (var i = 0; i < values.length; i++) {
-   values[i] = resolveJackpot(values[i])
+   values[i] = resolveOrderCancelled(values[i])
 }  return values
 },
-Faucets: async (parent, args) => {
+OrdersMatcheds: async (parent, args) => {
   let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}]
-  let values = await filterContractEvent('Faucet', predicate)
+  let values = await filterContractEvent('OrdersMatched', predicate)
   for (var i = 0; i < values.length; i++) {
-   values[i] = resolveFaucet(values[i])
+   values[i] = resolveOrdersMatched(values[i])
 }  return values
 },
-Donations: async (parent, args) => {
+OwnershipRenounceds: async (parent, args) => {
   let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}]
-  let values = await filterContractEvent('Donation', predicate)
+  let values = await filterContractEvent('OwnershipRenounced', predicate)
   for (var i = 0; i < values.length; i++) {
-   values[i] = resolveDonation(values[i])
-}  return values
-},
-Reclaims: async (parent, args) => {
-  let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}]
-  let values = await filterContractEvent('Reclaim', predicate)
-  for (var i = 0; i < values.length; i++) {
-   values[i] = resolveReclaim(values[i])
-}  return values
-},
-TrustUpdates: async (parent, args) => {
-  let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}]
-  let values = await filterContractEvent('TrustUpdate', predicate)
-  for (var i = 0; i < values.length; i++) {
-   values[i] = resolveTrustUpdate(values[i])
-}  return values
-},
-Withdraws: async (parent, args) => {
-  let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}]
-  let values = await filterContractEvent('Withdraw', predicate)
-  for (var i = 0; i < values.length; i++) {
-   values[i] = resolveWithdraw(values[i])
+   values[i] = resolveOwnershipRenounced(values[i])
 }  return values
 },
 OwnershipTransferreds: async (parent, args) => {
@@ -133,81 +113,76 @@ OwnershipTransferreds: async (parent, args) => {
 },
 }
 }
-function resolveRoll(contractEvent) {
+function resolveOrderApprovedPartOne(contractEvent) {
   let resp = {
     blockNumber: contractEvent.value.blockNumber,
-  block: web3.utils.fromWei(contractEvent.value.returnValues.block._hex, 'ether'),
-   player: contractEvent.value.returnValues.player,
-  wager: web3.utils.fromWei(contractEvent.value.returnValues.wager._hex, 'ether'),
-  rollUnder: web3.utils.fromWei(contractEvent.value.returnValues.rollUnder._hex, 'ether'),
-  dieRoll: web3.utils.fromWei(contractEvent.value.returnValues.dieRoll._hex, 'ether'),
-  profit: web3.utils.fromWei(contractEvent.value.returnValues.profit._hex, 'ether'),
-  payout: web3.utils.fromWei(contractEvent.value.returnValues.payout._hex, 'ether'),
+   proof: JSON.stringify(contractEvent.proof),
+  hash: contractEvent.value.returnValues.hash,
+   exchange: contractEvent.value.returnValues.exchange,
+   maker: contractEvent.value.returnValues.maker,
+   taker: contractEvent.value.returnValues.taker,
+  makerRelayerFee: web3.utils.fromWei(contractEvent.value.returnValues.makerRelayerFee._hex, 'ether'),
+  takerRelayerFee: web3.utils.fromWei(contractEvent.value.returnValues.takerRelayerFee._hex, 'ether'),
+  makerProtocolFee: web3.utils.fromWei(contractEvent.value.returnValues.makerProtocolFee._hex, 'ether'),
+  takerProtocolFee: web3.utils.fromWei(contractEvent.value.returnValues.takerProtocolFee._hex, 'ether'),
+   feeRecipient: contractEvent.value.returnValues.feeRecipient,
+  feeMethod: contractEvent.value.returnValues.feeMethod,
+  side: contractEvent.value.returnValues.side,
+  saleKind: contractEvent.value.returnValues.saleKind,
+   target: contractEvent.value.returnValues.target,
 }
   return resp
 }
 
-function resolveSponsorship(contractEvent) {
+function resolveOrderApprovedPartTwo(contractEvent) {
   let resp = {
     blockNumber: contractEvent.value.blockNumber,
-   executor: contractEvent.value.returnValues.executor,
-   sender: contractEvent.value.returnValues.sender,
-   beneficiary: contractEvent.value.returnValues.beneficiary,
-  amount: web3.utils.fromWei(contractEvent.value.returnValues.amount._hex, 'ether'),
+   proof: JSON.stringify(contractEvent.proof),
+  hash: contractEvent.value.returnValues.hash,
+  howToCall: contractEvent.value.returnValues.howToCall,
+  calldata: contractEvent.value.returnValues.calldata,
+  replacementPattern: contractEvent.value.returnValues.replacementPattern,
+   staticTarget: contractEvent.value.returnValues.staticTarget,
+  staticExtradata: contractEvent.value.returnValues.staticExtradata,
+   paymentToken: contractEvent.value.returnValues.paymentToken,
+  basePrice: web3.utils.fromWei(contractEvent.value.returnValues.basePrice._hex, 'ether'),
+  extra: web3.utils.fromWei(contractEvent.value.returnValues.extra._hex, 'ether'),
+  listingTime: web3.utils.fromWei(contractEvent.value.returnValues.listingTime._hex, 'ether'),
+  expirationTime: web3.utils.fromWei(contractEvent.value.returnValues.expirationTime._hex, 'ether'),
+  salt: web3.utils.fromWei(contractEvent.value.returnValues.salt._hex, 'ether'),
+  orderbookInclusionDesired: contractEvent.value.returnValues.orderbookInclusionDesired,
 }
   return resp
 }
 
-function resolveJackpot(contractEvent) {
+function resolveOrderCancelled(contractEvent) {
   let resp = {
     blockNumber: contractEvent.value.blockNumber,
-   player: contractEvent.value.returnValues.player,
-  amount: web3.utils.fromWei(contractEvent.value.returnValues.amount._hex, 'ether'),
+   proof: JSON.stringify(contractEvent.proof),
+  hash: contractEvent.value.returnValues.hash,
 }
   return resp
 }
 
-function resolveFaucet(contractEvent) {
+function resolveOrdersMatched(contractEvent) {
   let resp = {
     blockNumber: contractEvent.value.blockNumber,
-   player: contractEvent.value.returnValues.player,
-  amount: web3.utils.fromWei(contractEvent.value.returnValues.amount._hex, 'ether'),
+   proof: JSON.stringify(contractEvent.proof),
+  buyHash: contractEvent.value.returnValues.buyHash,
+  sellHash: contractEvent.value.returnValues.sellHash,
+   maker: contractEvent.value.returnValues.maker,
+   taker: contractEvent.value.returnValues.taker,
+  price: web3.utils.fromWei(contractEvent.value.returnValues.price._hex, 'ether'),
+  metadata: contractEvent.value.returnValues.metadata,
 }
   return resp
 }
 
-function resolveDonation(contractEvent) {
+function resolveOwnershipRenounced(contractEvent) {
   let resp = {
     blockNumber: contractEvent.value.blockNumber,
-   benefactor: contractEvent.value.returnValues.benefactor,
-  amount: web3.utils.fromWei(contractEvent.value.returnValues.amount._hex, 'ether'),
-}
-  return resp
-}
-
-function resolveReclaim(contractEvent) {
-  let resp = {
-    blockNumber: contractEvent.value.blockNumber,
-   owner: contractEvent.value.returnValues.owner,
-  amount: web3.utils.fromWei(contractEvent.value.returnValues.amount._hex, 'ether'),
-}
-  return resp
-}
-
-function resolveTrustUpdate(contractEvent) {
-  let resp = {
-    blockNumber: contractEvent.value.blockNumber,
-   previous: contractEvent.value.returnValues.previous,
-   current: contractEvent.value.returnValues.current,
-}
-  return resp
-}
-
-function resolveWithdraw(contractEvent) {
-  let resp = {
-    blockNumber: contractEvent.value.blockNumber,
-   player: contractEvent.value.returnValues.player,
-  amount: web3.utils.fromWei(contractEvent.value.returnValues.amount._hex, 'ether'),
+   proof: JSON.stringify(contractEvent.proof),
+   previousOwner: contractEvent.value.returnValues.previousOwner,
 }
   return resp
 }
@@ -215,6 +190,7 @@ function resolveWithdraw(contractEvent) {
 function resolveOwnershipTransferred(contractEvent) {
   let resp = {
     blockNumber: contractEvent.value.blockNumber,
+   proof: JSON.stringify(contractEvent.proof),
    previousOwner: contractEvent.value.returnValues.previousOwner,
    newOwner: contractEvent.value.returnValues.newOwner,
 }

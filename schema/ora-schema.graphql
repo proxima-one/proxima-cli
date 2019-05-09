@@ -1,72 +1,74 @@
 type Query { 
-  Rolls(fromBlock: Int!): [Roll] 
-  Sponsorships(fromBlock: Int!): [Sponsorship] 
-  Jackpots(fromBlock: Int!): [Jackpot] 
-  Faucets(fromBlock: Int!): [Faucet] 
-  Donations(fromBlock: Int!): [Donation] 
-  Reclaims(fromBlock: Int!): [Reclaim] 
-  TrustUpdates(fromBlock: Int!): [TrustUpdate] 
-  Withdraws(fromBlock: Int!): [Withdraw] 
+  OrderApprovedPartOnes(fromBlock: Int!): [OrderApprovedPartOne] 
+  OrderApprovedPartTwos(fromBlock: Int!): [OrderApprovedPartTwo] 
+  OrderCancelleds(fromBlock: Int!): [OrderCancelled] 
+  OrdersMatcheds(fromBlock: Int!): [OrdersMatched] 
+  OwnershipRenounceds(fromBlock: Int!): [OwnershipRenounced] 
   OwnershipTransferreds(fromBlock: Int!): [OwnershipTransferred] 
 }
  
-type Roll  { 
+type OrderApprovedPartOne  { 
   blockNumber: Int! 
-  block: Float!
-  player: String!
-  wager: Float!
-  rollUnder: Float!
-  dieRoll: Float!
-  profit: Float!
-  payout: Float!
+   proof: String 
+  hash: String!
+  exchange: String!
+  maker: String!
+  taker: String!
+  makerRelayerFee: Float!
+  takerRelayerFee: Float!
+  makerProtocolFee: Float!
+  takerProtocolFee: Float!
+  feeRecipient: String!
+  feeMethod: String!
+  side: String!
+  saleKind: String!
+  target: String!
 } 
 
-type Sponsorship  { 
+type OrderApprovedPartTwo  { 
   blockNumber: Int! 
-  executor: String!
-  sender: String!
-  beneficiary: String!
-  amount: Float!
+   proof: String 
+  hash: String!
+  howToCall: String!
+  calldata: String!
+  replacementPattern: String!
+  staticTarget: String!
+  staticExtradata: String!
+  paymentToken: String!
+  basePrice: Float!
+  extra: Float!
+  listingTime: Float!
+  expirationTime: Float!
+  salt: Float!
+  orderbookInclusionDesired: String!
 } 
 
-type Jackpot  { 
+type OrderCancelled  { 
   blockNumber: Int! 
-  player: String!
-  amount: Float!
+   proof: String 
+  hash: String!
 } 
 
-type Faucet  { 
+type OrdersMatched  { 
   blockNumber: Int! 
-  player: String!
-  amount: Float!
+   proof: String 
+  buyHash: String!
+  sellHash: String!
+  maker: String!
+  taker: String!
+  price: Float!
+  metadata: String!
 } 
 
-type Donation  { 
+type OwnershipRenounced  { 
   blockNumber: Int! 
-  benefactor: String!
-  amount: Float!
-} 
-
-type Reclaim  { 
-  blockNumber: Int! 
-  owner: String!
-  amount: Float!
-} 
-
-type TrustUpdate  { 
-  blockNumber: Int! 
-  previous: String!
-  current: String!
-} 
-
-type Withdraw  { 
-  blockNumber: Int! 
-  player: String!
-  amount: Float!
+   proof: String 
+  previousOwner: String!
 } 
 
 type OwnershipTransferred  { 
   blockNumber: Int! 
+   proof: String 
   previousOwner: String!
   newOwner: String!
 } 
