@@ -42,19 +42,17 @@ function main() {
         eventQuery += resp.query
 
         break;
-
+      /*
       case 'function':
         if (chunk.constant) {
-          console.log("function", chunk.name)
-          console.log("inputs", chunk.inputs)
-          console.log("function", chunk.outputs)
-
+          console.log("function", chunk)
         }
 
         break;
-      //default:
-        //console.log(chunk.type)
+      default:
+        console.log(chunk.type)
 
+      */
     }
   }
 
@@ -89,7 +87,6 @@ function eventSchema(contractEvent) {
   let schema = "type "
   schema += contractEvent.name + "  { " + '\n'
   schema += "  blockNumber: Int! \n"
-  schema += "   proof: String \n"
   for (let v = 0; v < contractEvent.inputs.length; v ++) {
     switch(contractEvent.inputs[v].type) {
       case "address":
@@ -127,7 +124,6 @@ function eventResolvers(contractEvent) {
   let funct = "function resolve" + contractEvent.name + "(contractEvent) { \n"
   funct += "  let resp = { \n"
   funct += "    blockNumber: contractEvent.value.blockNumber,\n"
-  funct += "   proof: JSON.stringify(contractEvent.proof),\n"
   for (let v = 0; v < contractEvent.inputs.length; v ++) {
     switch(contractEvent.inputs[v].type) {
       case "address":
@@ -140,7 +136,6 @@ function eventResolvers(contractEvent) {
         funct+= "  " + contractEvent.inputs[v].name + ": " +  "contractEvent.value.returnValues."+contractEvent.inputs[v].name + ',\n'
     }
 }
-
 funct += "} \n"
 funct += '  return resp \n} \n\n'
 return funct
@@ -161,7 +156,7 @@ function queryResolvers(contractEvent) {
   schema += "  for (var i = 0; i < values.length; i++) { \n"
 
   schema += "   values[i] = resolve" + contractEvent.name + "(values[i]) \n}"
-    //schema += " console.log(values[i]) \n"
+    schema += " console.log(values[i]) \n"
   schema += "  return values\n},"
 
 
@@ -185,25 +180,19 @@ function headIndex() {
   head += "const environment = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));\n"
   head += "const abiCode = require(environment.abi); \n"
   head += "const contractAddress = environment.contract; \n"
-  head += "let contract = web3.eth.Contract(abiCode, contractAddress); \n\n"
+  head += "let contract = web3.eth.Contract(abiCode, contractAddress); \n"
 
 
-    head += "async function getLatest() { \n "
-
-head += "let blockNumber = await  web3.eth.getBlockNumber();\n"
-  head += "contract.getPastEvents('allEvents',{fromBlock: blockNumber-1000, toBlock: 'latest' }, \n"
+  head += "contract.getPastEvents('allEvents',{fromBlock: 7668815, toBlock: 'latest' }, \n"
     head += "async function(error, events){ \n"
       head += "if (events) { \n"
       head += "for (var i = 0; i < events.length; i++) { \n"
       head += "let contractEvent = events[i] \n"
-      //head += "console.log(contractEvent) \n"
+      head += "console.log(contractEvent) \n"
       head += "let value = await putEvent(contractEvent); \n"
       head += "} \n"
     head += "} \n"
-  head += "}); \n } \n \n "
-
-head += "getLatest(); \n\n"
-
+  head += "}); \n"
   head += "async function putEvent(contractEvent) { \n"
   head += "  var id = Date.now() \n"
   head += "  let req = { \n"
@@ -215,7 +204,7 @@ head += "getLatest(); \n\n"
   head += "  } \n"
   head += "  let value = await ruffle.request(req) \n"
   head += "  return value \n"
-  head += "} \n\n"
+  head += "} \n"
   head += "async function getContractEvent(name, id) {  \n"
   head += "  let req = { \n"
   head += "    name: name, \n"
@@ -225,7 +214,7 @@ head += "getLatest(); \n\n"
   head += "  } \n"
   head += "  let resp = await ruffle.request(req) \n"
   head += "  return resp \n"
-  head += "} \n\n"
+  head += "} \n"
 
   head += "async function filterContractEvent(name, pred) { \n"
   head += "  let req = { \n"
@@ -235,8 +224,8 @@ head += "getLatest(); \n\n"
   head += "    action: 'filter' \n"
   head += "  } \n"
   head += "  let values = await ruffle.request(req) \n"
-  //head += " console.log(values)\n"
-  head += "  return values \n}  \n\n"
+  head += " console.log(values)\n"
+  head += "  return values \n}  \n"
     return head
 }
 

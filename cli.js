@@ -83,7 +83,7 @@ async function init() {
   yml += "contract: 'Contract Address' \n"
     yml +=  "abi: Your ABI Path \n"
       yml +=  "datasource: Your Datasource \n"
-  fse.outputFile('config.yml', yml, err => {});
+  fse.outputFile('configs.yml', yml, err => {});
 }
 
 async function build() {

@@ -1,75 +1,69 @@
 type Query { 
-  OrderApprovedPartOnes(fromBlock: Int!): [OrderApprovedPartOne] 
-  OrderApprovedPartTwos(fromBlock: Int!): [OrderApprovedPartTwo] 
-  OrderCancelleds(fromBlock: Int!): [OrderCancelled] 
-  OrdersMatcheds(fromBlock: Int!): [OrdersMatched] 
-  OwnershipRenounceds(fromBlock: Int!): [OwnershipRenounced] 
-  OwnershipTransferreds(fromBlock: Int!): [OwnershipTransferred] 
+  SetOwners(fromBlock: Int!): [SetOwner] 
+  Orders(fromBlock: Int!): [Order] 
+  Cancels(fromBlock: Int!): [Cancel] 
+  Trades(fromBlock: Int!): [Trade] 
+  Deposits(fromBlock: Int!): [Deposit] 
+  Withdraws(fromBlock: Int!): [Withdraw] 
 }
  
-type OrderApprovedPartOne  { 
+type SetOwner  { 
   blockNumber: Int! 
-   proof: String 
-  hash: String!
-  exchange: String!
-  maker: String!
-  taker: String!
-  makerRelayerFee: Float!
-  takerRelayerFee: Float!
-  makerProtocolFee: Float!
-  takerProtocolFee: Float!
-  feeRecipient: String!
-  feeMethod: String!
-  side: String!
-  saleKind: String!
-  target: String!
-} 
-
-type OrderApprovedPartTwo  { 
-  blockNumber: Int! 
-   proof: String 
-  hash: String!
-  howToCall: String!
-  calldata: String!
-  replacementPattern: String!
-  staticTarget: String!
-  staticExtradata: String!
-  paymentToken: String!
-  basePrice: Float!
-  extra: Float!
-  listingTime: Float!
-  expirationTime: Float!
-  salt: Float!
-  orderbookInclusionDesired: String!
-} 
-
-type OrderCancelled  { 
-  blockNumber: Int! 
-   proof: String 
-  hash: String!
-} 
-
-type OrdersMatched  { 
-  blockNumber: Int! 
-   proof: String 
-  buyHash: String!
-  sellHash: String!
-  maker: String!
-  taker: String!
-  price: Float!
-  metadata: String!
-} 
-
-type OwnershipRenounced  { 
-  blockNumber: Int! 
-   proof: String 
-  previousOwner: String!
-} 
-
-type OwnershipTransferred  { 
-  blockNumber: Int! 
-   proof: String 
   previousOwner: String!
   newOwner: String!
+} 
+
+type Order  { 
+  blockNumber: Int! 
+  tokenBuy: String!
+  amountBuy: Float!
+  tokenSell: String!
+  amountSell: Float!
+  expires: Float!
+  nonce: Float!
+  user: String!
+  v: String!
+  r: String!
+  s: String!
+} 
+
+type Cancel  { 
+  blockNumber: Int! 
+  tokenBuy: String!
+  amountBuy: Float!
+  tokenSell: String!
+  amountSell: Float!
+  expires: Float!
+  nonce: Float!
+  user: String!
+  v: String!
+  r: String!
+  s: String!
+} 
+
+type Trade  { 
+  blockNumber: Int! 
+  tokenBuy: String!
+  amountBuy: Float!
+  tokenSell: String!
+  amountSell: Float!
+  get: String!
+  give: String!
+} 
+
+type Deposit  { 
+  blockNumber: Int! 
+  token: String!
+  user: String!
+  amount: Float!
+  balance: Float!
+} 
+
+type Withdraw  { 
+  blockNumber: Int! 
+  token: String!
+  user: String!
+  amount: Float!
+  balance: Float!
 } 
 
