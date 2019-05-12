@@ -87,6 +87,7 @@ function eventSchema(contractEvent) {
   let schema = "type "
   schema += contractEvent.name + "  { " + '\n'
   schema += "  blockNumber: Int! \n"
+  schema += "  proof: String! \n"
   for (let v = 0; v < contractEvent.inputs.length; v ++) {
     switch(contractEvent.inputs[v].type) {
       case "address":
@@ -124,6 +125,7 @@ function eventResolvers(contractEvent) {
   let funct = "function resolve" + contractEvent.name + "(contractEvent) { \n"
   funct += "  let resp = { \n"
   funct += "    blockNumber: contractEvent.value.blockNumber,\n"
+    funct += "    proof: JSON.stringify(contractEvent.proof),\n"
   for (let v = 0; v < contractEvent.inputs.length; v ++) {
     switch(contractEvent.inputs[v].type) {
       case "address":
@@ -156,7 +158,7 @@ function queryResolvers(contractEvent) {
   schema += "  for (var i = 0; i < values.length; i++) { \n"
 
   schema += "   values[i] = resolve" + contractEvent.name + "(values[i]) \n}"
-    schema += " console.log(values[i]) \n"
+    //schema += " console.log(values[i]) \n"
   schema += "  return values\n},"
 
 
@@ -213,7 +215,7 @@ function headIndex() {
   head += "    id: Date.now() \n"
   head += "  } \n"
   head += "  let resp = await ruffle.request(req) \n"
-  head += "  return resp \n"
+  head += "  return [resp] \n"
   head += "} \n"
 
   head += "async function filterContractEvent(name, pred) { \n"
