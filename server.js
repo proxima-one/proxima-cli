@@ -1,25 +1,33 @@
 const { GraphQLServer } = require('graphql-yoga') 
 const Ruffle = require('ora-ruffle') 
 var fs = require('fs');
+let ruffle = new Ruffle(); 
+ const yaml = require('js-yaml');
+const environment = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));
+
 const Web3 = require('web3') 
 const provider = new Web3.providers.HttpProvider('https://mainnet.infura.io:443') 
  const web3 = new Web3(provider); 
- let ruffle = new Ruffle(); 
- const yaml = require('js-yaml');
-const environment = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));
-const abiCode = require(environment.abi); 
+ const abiCode = require(environment.abi); 
 const contractAddress = environment.contract; 
 let contract = web3.eth.Contract(abiCode, contractAddress); 
-contract.getPastEvents('allEvents',{fromBlock: 7668815, toBlock: 'latest' }, 
+async function getLatest() {
+let currentBlock = await web3.eth.getBlockNumber();
+contract.getPastEvents('allEvents',{fromBlock: currentBlock - 1000, toBlock: 'latest' }, 
 async function(error, events){ 
 if (events) { 
 for (var i = 0; i < events.length; i++) { 
 let contractEvent = events[i] 
-console.log(contractEvent) 
+//console.log(contractEvent) 
 let value = await putEvent(contractEvent); 
 } 
 } 
 }); 
+
+}
+ 
+getLatest(); 
+
 async function putEvent(contractEvent) { 
   var id = Date.now() 
   let req = { 
@@ -40,7 +48,7 @@ async function getContractEvent(name, id) {
     id: Date.now() 
   } 
   let resp = await ruffle.request(req) 
-  return resp 
+  return [resp] 
 } 
 async function filterContractEvent(name, pred) { 
   let req = { 
@@ -50,7 +58,7 @@ async function filterContractEvent(name, pred) {
     action: 'filter' 
   } 
   let values = await ruffle.request(req) 
- console.log(values)
+ //console.log(values)
   return values 
 }  
 const resolvers = { 
@@ -61,54 +69,49 @@ SetOwners: async (parent, args) => {
   let values = await filterContractEvent('SetOwner', predicate) 
   for (var i = 0; i < values.length; i++) { 
    values[i] = resolveSetOwner(values[i]) 
-} console.log(values[i]) 
-  return values
+}  return values
 },
 Orders: async (parent, args) => {
   let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}] 
   let values = await filterContractEvent('Order', predicate) 
   for (var i = 0; i < values.length; i++) { 
    values[i] = resolveOrder(values[i]) 
-} console.log(values[i]) 
-  return values
+}  return values
 },
 Cancels: async (parent, args) => {
   let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}] 
   let values = await filterContractEvent('Cancel', predicate) 
   for (var i = 0; i < values.length; i++) { 
    values[i] = resolveCancel(values[i]) 
-} console.log(values[i]) 
-  return values
+}  return values
 },
 Trades: async (parent, args) => {
   let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}] 
   let values = await filterContractEvent('Trade', predicate) 
   for (var i = 0; i < values.length; i++) { 
    values[i] = resolveTrade(values[i]) 
-} console.log(values[i]) 
-  return values
+}  return values
 },
 Deposits: async (parent, args) => {
   let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}] 
   let values = await filterContractEvent('Deposit', predicate) 
   for (var i = 0; i < values.length; i++) { 
    values[i] = resolveDeposit(values[i]) 
-} console.log(values[i]) 
-  return values
+}  return values
 },
 Withdraws: async (parent, args) => {
   let predicate = [{name: 'blockNumber', expression: '>', value: args.fromBlock}] 
   let values = await filterContractEvent('Withdraw', predicate) 
   for (var i = 0; i < values.length; i++) { 
    values[i] = resolveWithdraw(values[i]) 
-} console.log(values[i]) 
-  return values
+}  return values
 },
 }
 }
 function resolveSetOwner(contractEvent) { 
   let resp = { 
     blockNumber: contractEvent.value.blockNumber,
+    proof: JSON.stringify(contractEvent.proof),
    previousOwner: contractEvent.value.returnValues.previousOwner,
    newOwner: contractEvent.value.returnValues.newOwner,
 } 
@@ -118,6 +121,7 @@ function resolveSetOwner(contractEvent) {
 function resolveOrder(contractEvent) { 
   let resp = { 
     blockNumber: contractEvent.value.blockNumber,
+    proof: JSON.stringify(contractEvent.proof),
    tokenBuy: contractEvent.value.returnValues.tokenBuy,
   amountBuy: web3.utils.fromWei(contractEvent.value.returnValues.amountBuy._hex, 'ether'),
    tokenSell: contractEvent.value.returnValues.tokenSell,
@@ -135,6 +139,7 @@ function resolveOrder(contractEvent) {
 function resolveCancel(contractEvent) { 
   let resp = { 
     blockNumber: contractEvent.value.blockNumber,
+    proof: JSON.stringify(contractEvent.proof),
    tokenBuy: contractEvent.value.returnValues.tokenBuy,
   amountBuy: web3.utils.fromWei(contractEvent.value.returnValues.amountBuy._hex, 'ether'),
    tokenSell: contractEvent.value.returnValues.tokenSell,
@@ -152,6 +157,7 @@ function resolveCancel(contractEvent) {
 function resolveTrade(contractEvent) { 
   let resp = { 
     blockNumber: contractEvent.value.blockNumber,
+    proof: JSON.stringify(contractEvent.proof),
    tokenBuy: contractEvent.value.returnValues.tokenBuy,
   amountBuy: web3.utils.fromWei(contractEvent.value.returnValues.amountBuy._hex, 'ether'),
    tokenSell: contractEvent.value.returnValues.tokenSell,
@@ -165,6 +171,7 @@ function resolveTrade(contractEvent) {
 function resolveDeposit(contractEvent) { 
   let resp = { 
     blockNumber: contractEvent.value.blockNumber,
+    proof: JSON.stringify(contractEvent.proof),
    token: contractEvent.value.returnValues.token,
    user: contractEvent.value.returnValues.user,
   amount: web3.utils.fromWei(contractEvent.value.returnValues.amount._hex, 'ether'),
@@ -176,6 +183,7 @@ function resolveDeposit(contractEvent) {
 function resolveWithdraw(contractEvent) { 
   let resp = { 
     blockNumber: contractEvent.value.blockNumber,
+    proof: JSON.stringify(contractEvent.proof),
    token: contractEvent.value.returnValues.token,
    user: contractEvent.value.returnValues.user,
   amount: web3.utils.fromWei(contractEvent.value.returnValues.amount._hex, 'ether'),

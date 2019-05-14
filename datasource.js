@@ -173,28 +173,38 @@ function headIndex() {
   let head = "const { GraphQLServer } = require('graphql-yoga') \n"
     head += "const Ruffle = require('ora-ruffle') \n"
     head += "var fs = require('fs');\n"
-    head += "const Web3 = require('web3') \n"
-  head += "const provider = new Web3.providers.HttpProvider('https://mainnet.infura.io:443') \n "
-  head += "const web3 = new Web3(provider); \n "
 
   head += "let ruffle = new Ruffle(); \n "
   head += "const yaml = require('js-yaml');\n"
-  head += "const environment = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));\n"
+  head += "const environment = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));\n\n"
+  /*
+
+  */
+  head += "const Web3 = require('web3') \n"
+  head += "const provider = new Web3.providers.HttpProvider('https://mainnet.infura.io:443') \n "
+  head += "const web3 = new Web3(provider); \n "
   head += "const abiCode = require(environment.abi); \n"
   head += "const contractAddress = environment.contract; \n"
   head += "let contract = web3.eth.Contract(abiCode, contractAddress); \n"
 
+  head += "async function getLatest() {\n"
+  head += "let currentBlock = await web3.eth.getBlockNumber();\n"
 
-  head += "contract.getPastEvents('allEvents',{fromBlock: 7668815, toBlock: 'latest' }, \n"
+  head += "contract.getPastEvents('allEvents',{fromBlock: currentBlock - 1000, toBlock: 'latest' }, \n"
     head += "async function(error, events){ \n"
       head += "if (events) { \n"
       head += "for (var i = 0; i < events.length; i++) { \n"
       head += "let contractEvent = events[i] \n"
-      head += "console.log(contractEvent) \n"
+      head += "//console.log(contractEvent) \n"
       head += "let value = await putEvent(contractEvent); \n"
       head += "} \n"
     head += "} \n"
-  head += "}); \n"
+  head += "}); \n\n"
+head += "}\n \n"
+head += "getLatest(); \n\n"
+  /*
+
+  */
   head += "async function putEvent(contractEvent) { \n"
   head += "  var id = Date.now() \n"
   head += "  let req = { \n"
@@ -226,7 +236,7 @@ function headIndex() {
   head += "    action: 'filter' \n"
   head += "  } \n"
   head += "  let values = await ruffle.request(req) \n"
-  head += " console.log(values)\n"
+  head += " //console.log(values)\n"
   head += "  return values \n}  \n"
     return head
 }

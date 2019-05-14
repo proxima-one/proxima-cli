@@ -9,12 +9,14 @@ type Query {
  
 type SetOwner  { 
   blockNumber: Int! 
+  proof: String! 
   previousOwner: String!
   newOwner: String!
 } 
 
 type Order  { 
   blockNumber: Int! 
+  proof: String! 
   tokenBuy: String!
   amountBuy: Float!
   tokenSell: String!
@@ -29,6 +31,7 @@ type Order  {
 
 type Cancel  { 
   blockNumber: Int! 
+  proof: String! 
   tokenBuy: String!
   amountBuy: Float!
   tokenSell: String!
@@ -43,6 +46,7 @@ type Cancel  {
 
 type Trade  { 
   blockNumber: Int! 
+  proof: String! 
   tokenBuy: String!
   amountBuy: Float!
   tokenSell: String!
@@ -53,6 +57,7 @@ type Trade  {
 
 type Deposit  { 
   blockNumber: Int! 
+  proof: String! 
   token: String!
   user: String!
   amount: Float!
@@ -61,6 +66,7 @@ type Deposit  {
 
 type Withdraw  { 
   blockNumber: Int! 
+  proof: String! 
   token: String!
   user: String!
   amount: Float!

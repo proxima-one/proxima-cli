@@ -1,4 +1,4 @@
-name: New
+name: IDEX
 abi: ./abi/idex_abi.json
 contract: '0x2a0c0DBEcC7E4D658f48E01e3fA353F44050c208'
 datasource: Ethereum

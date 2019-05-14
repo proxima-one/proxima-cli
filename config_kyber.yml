@@ -1,0 +1,6 @@
+name: Kyber
+abi: ./abi/kyberconversion_abi.json
+contract: '0x798AbDA6Cc246D0EDbA912092A2a3dBd3d11191B'
+datasource: Ethereum
+id: Id
+owner: Owner
