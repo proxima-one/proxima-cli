@@ -1,12 +1,14 @@
 
 
-# Tutorial
+# Proxima CLI
+
+
 
 ## Installation
 
 ```
-git clone https://github.com/chasesmith95/meshcache.git
-cd /meshcache/ora-protocol-cli/
+git clone https://github.com/proxima-one/proxima-cli
+cd /proxima-cli
 
 ```
 
@@ -74,8 +76,6 @@ node cli start
 Starting the node.... 
 Server is running on http://localhost:4000
 ```
-
-
 
 ![](explorer.png)
 
