@@ -1,6 +1,8 @@
 
 
-# Tutorial
+# Proxima CLI
+
+
 
 ## Installation
 
