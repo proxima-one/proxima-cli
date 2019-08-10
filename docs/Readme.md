@@ -2,7 +2,23 @@
 
 # Proxima CLI
 
+<!--
 
+init
+
+generate
+
+build
+
+run
+
+publish
+
+remove
+
+deploy
+
+-->
 
 ## Installation
 
@@ -12,6 +28,14 @@ cd /proxima-cli
 
 ```
 
+
+<!--
+Remember the cli should be downloaded as a global variable
+
+look into the @ installation
+
+-->
+
 ## Example Usage
 
 ### Initialize
@@ -19,19 +43,19 @@ cd /proxima-cli
 node cli init
 ```
 
-Output 
+Output
 
 ```
-Initializing a new project.... 
-.... 
-.... 
-.... 
+Initializing a new project....
+....
+....
+....
 Completed
 ```
 
 
 #### Include ABI Code
-You can include the raw text of the ABI code. For this instance, we have already loaded an abi code for the IDEX exchange. 
+You can include the raw text of the ABI code. For this instance, we have already loaded an abi code for the IDEX exchange.
 Featured in abi/idex_abi.json.
 
 
@@ -55,7 +79,7 @@ node cli build
 ```
 
 ```
-Building.... 
+Building....
 event SetOwner
 event Order
 event Cancel
@@ -73,7 +97,7 @@ node cli start
 ```
 
 ```
-Starting the node.... 
+Starting the node....
 Server is running on http://localhost:4000
 ```
 
