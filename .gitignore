@@ -1,3 +1,10 @@
 .DS_Store
 /db
-.bash_rc
+*-debug.log
+*-error.log
+/.nyc_output
+/dist
+/tmp
+/yarn.lock
+/package-lock.json
+node_modules
