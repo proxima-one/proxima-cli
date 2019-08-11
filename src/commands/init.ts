@@ -1,5 +1,7 @@
 import {Command} from '@oclif/command'
 import * as fs from 'fs-extra';
+import * as prettier from 'prettier'
+
 
 export class Init extends Command {
   /*
@@ -34,9 +36,16 @@ Make directories
 
 /*
 Make config file
+prettier.format()
 */
   async package() {
-    await fs.outputFile("directory/package.json", "package.json")
+    var package_contents = prettier.format(`{package: contents,
+      contents: next,
+      contents: next,
+      contents: next
+    }
+    `, { parser: 'json' })
+    await fs.outputFile("directory/package.json", package_contents)
   }
 
 
@@ -45,7 +54,11 @@ Make Package file
 */
 
   async configuration() {
-    await fs.outputFile("directory/config.yml", "config")
+    var config_contents = prettier.format(`
+      package: contents
+      contents: next
+    `, {parser: 'yaml' })
+    await fs.outputFile("directory/config.yml", config_contents)
   }
 
 

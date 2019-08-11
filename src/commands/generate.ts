@@ -19,12 +19,6 @@ export default class Generate extends Command {
 
   static description = 'generates the types, schemas, and handlers from the configuration file'
 
-  static examples = [
-    `$ proxima hello
-hello world from ./src/hello.ts!
-`,
-  ]
-
   static flags = {
     help: flags.help({char: 'h'}),
     // flag with a value (-n, --name=VALUE)
