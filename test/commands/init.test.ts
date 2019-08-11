@@ -1,12 +1,25 @@
 import {expect, test} from '@oclif/test'
 
-describe('hello', () => {
+/*
+Should test:
+  - Cannot initialize twice (Error message)
+
+  - Does write the package correctly
+  - Does write the config correctly
+  - Does write the directories (src, test)
+
+
+*/
+
+
+describe('init', () => {
   test
     .stdout()
-    .command(['hello'])
+    .command(['init'])
     .it('runs hello', ctx => {
       expect(ctx.stdout).to.contain('hello world')
     })
+
 
   test
     .stdout()
