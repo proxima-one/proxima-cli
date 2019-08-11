@@ -1,7 +1,23 @@
 import {Command, flags} from '@oclif/command'
 
+
+/*
+  This must generates the code from the config file:
+  - Server for Graphql (Should be the query node)
+  - Generates Schema + Graphql types
+  - Events
+  - Handlers (for graphql)
+  - Types + Query Resolvers
+  - Verification, Authentication, Audit handlers of data (Client needs this as well)
+  - Datasources/Subgraphs
+  - Database Resolvers
+  - Database (Should be the query node)
+  - Peer-to-Peer mesh eventually (should be the query node)
+*/
+
 export default class Generate extends Command {
-  static description = 'says hello'
+
+  static description = 'generates the types, schemas, and handlers from the configuration file'
 
   static examples = [
     `$ proxima hello
