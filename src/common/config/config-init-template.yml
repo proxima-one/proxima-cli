@@ -1,0 +1,35 @@
+id: #Can be auto-generated
+name: Name of Project
+repo:
+description:
+schema:
+  file: #./schema/schema.graphql
+# clients:
+#   - client:
+#       name: ethereum
+#       args:
+#         - network
+#         - startBlock
+#       location: ./clients/ethereumClient.js
+datasources:
+  - datasource:
+      name: #DATASOURCE_NAME
+      client:
+        name: ethereum
+        network: testnet
+        startBlock: 10634502
+      template:
+        abi: CONTRACT_NAME
+      source:
+        address: #Contract address
+        abi: CONTRACT_NAME
+      handlers:
+        dir: #./handlers/DATASOURCE NAME
+          - functionHandlers: functionHandlers.js
+          - eventHandlers: eventHandlers.js
+          - transactionHandlers: transactionHandlers.js
+          - blockHandlers: blockHandlers.js
+          - functionPolls:  functionPolls.js
+      contracts:
+        - name: CONTRACT_NAME
+          file: #file location

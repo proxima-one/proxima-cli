@@ -1,0 +1,58 @@
+id: Project id
+name: Name of Project
+repo:
+description:
+schema:
+  file: ./schema/schema.graphql
+clients:
+  - client:
+      name: ethereum
+      args:
+        - network
+        - startBlock
+      location: ./clients/ethereumClient.js
+datasources:
+  - datasource:
+      name: MooniSwapMain
+      client:
+        name: ethereum
+        network: testnet
+        startBlock: 10634502
+      source:
+        address: '0x71CD6666064C3A1354a3B4dca5fA1E2D3ee7D303'
+        abi: MooniswapFactory
+      handlers:
+        dir: ./handlers/MooniswapFactory
+          - functionHandlers: functionHandlers.js
+          - eventHandlers: eventHandlers.js
+          - transactionHandlers: transactionHandlers.js
+          - blockHandlers: blockHandlers.js
+          - functionPolls:  functionPolls.js
+      contracts:
+        - name: MooniswapFactory
+          file: ./abis/mooniswap-factory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+    - datasource:
+        name: MooniSwapPair
+        client:
+          name: ethereum
+          network: testnet
+        template:
+          abi: Pair
+        handlers:
+          dir: ./handlers/Pair
+            - functionHandlers: functionHandlers.js
+            - eventHandlers: eventHandlers.js
+            - transactionHandlers: transactionHandlers.js
+            - blockHandlers: blockHandlers.js
+            - functionPolls:  functionPolls.js
+        contracts:
+          - name: Pair
+            file: ./contracts/mooniswap.json
+          - name: ERC20
+            file: ./abis/ERC20.json

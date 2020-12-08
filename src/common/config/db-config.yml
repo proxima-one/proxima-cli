@@ -1,0 +1,7 @@
+compression-period: #time between automatic database compression
+batch-period: #time between automatic batches
+memory: #amount of memory db uses (total)
+storage: #amount of storage db uses (total)
+key-size: #size of keys automatic is
+cache-default: #time for cache
+cache-config: #extra cache configurations
