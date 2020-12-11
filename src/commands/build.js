@@ -7,10 +7,8 @@ const path = require('path');
 
 async function build() {
   BUILD_STARTING_MESSAGE()
-  if (folder) {
-    build_project()
-  }
-  build_docker_project()
+  let config = getApplicationConfig()
+  buildProximaApplication(config, local)
   BUILD_ENDING_MESSAGE()
 }
 
@@ -23,21 +21,13 @@ Build or update full application folders
 - build the database config
 - build the blockchain client
 */
-async function build_project_folders() {
-  console.log("Not implemented.")
+async function buildProximaApplication(config, local = true) {
+  generator.buildDataVertex(config)
+  generator.buildDAppAggregator(config)
+  generator.buildDockerCompose(config)
 }
 
-/*
-Build the docker containers
-- build docker compose from the proxima.yml
-- then make the correct dockerfiles (if blank, then)
-*/
-async function build_docker_compose() {
-  console.log("Not implemented.")
-}
 
-async function build_docker_files() {
-  console.log("Not implemented.")
-}
+
 
 module.exports = = {name: "build", function: build, description: "Build the data vertex app"};

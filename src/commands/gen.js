@@ -10,19 +10,27 @@ Generate
 async function gen() {
   GEN_STARTING_MESSAGE();
   if (canGenerate()) {
-    generateProximaApplication();
+    let config = getApplicationConfig()
+    generateProximaApplication(config);
     GEN_ENDING_MESSAGE();
   }
 }
+
+/*
+App Config from proxima
+*/
 
 function canGenerate() {
   return true
 }
 
-function generateProximaApplication() {
-  //generate folders
-  //config to generate function
-  //write gen function
+function generateProximaApplication(config) {
+  generator.processSchema(config)
+  generator.generateApplicationDatabase(config)
+
+  generator.generateHandlers(config)
+  generator.generateBlockchainClient(config)
+  generator.generateProximaClient(config)
 }
 
 module.exports = {name: "gen", function: gen, description: "Generate the event-handlers from the config."};

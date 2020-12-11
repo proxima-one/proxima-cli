@@ -1,0 +1,8 @@
+/*
+main
+default updates
+exports
+then the typescript updates
+import all the files within the ... 
+proximaClient
+*/

@@ -6,6 +6,9 @@
   "bin": {
     "proxima": "index.js"
   },
+  "scripts": {
+    "test": "mocha"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -16,6 +19,8 @@
     "fs-extra": "^7.0.1",
     "graphql-yoga": "^1.17.4",
     "js-yaml": "^3.13.1",
+    "mocha": "^8.2.1",
+    "proxima-autogen": "^1.0.0",
     "web3": "^1.0.0-beta.55"
   }
 }

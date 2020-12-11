@@ -1,0 +1,7 @@
+app-config: "app-config.yml"
+docker:
+  folder: "./docker"
+  blockchain-client: ""
+  dapp-aggregator: ""
+  data-vertex: ""
+  database: "dockerfile"

@@ -6,12 +6,17 @@ const path = require('path');
 
 
 async function run() {
-  console.log("Not implemented.")
+  runDockerApplication()
 }
 
-/*
-docker compose up
-*/
+function runDockerApplication(config) {
+exec('docker-compose run', function(code, stdout, stderr) {
+  console.log('Exit code:', code);
+  console.log('Program output:', stdout);
+  console.log('Program stderr:', stderr);
+});
+
+}
 
 
 module.exports = = {name: "run", function: run, description: "Run the node, either locally or remotely."};
