@@ -5,11 +5,11 @@ const path = require('path');
 const yaml = require('js-yaml');
 
 ////////////////////init messages////////////////////////////////
-function initStartingMessage() {
+function buildStartingMessage() {
   console.log(chalk.green('Building proxima project.... '))
 }
 
-function initEndingMessage() {
+function buildEndingMessage() {
     console.log(chalk.green('Application Built.'))
 }
 

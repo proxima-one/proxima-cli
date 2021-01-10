@@ -1,8 +1,3 @@
-type Query {
-  getConversionRate(token: String!): [ConversionRate]
-
-}
-
 type ConversionRate  {
   token: String!
   rateSell: Float!

@@ -1,0 +1,134 @@
+type DPoolList @entity {
+  id: ID!
+  pools: [DPool!]!
+  numPools: String!
+  numUsers: String!
+  numActiveUsers: String!
+  numFunders: String!
+}
+
+type DPool @entity {
+  id: ID!
+  address: String!
+  moneyMarket: String!
+  stablecoin: String!
+  interestModel: String!
+  users: [User!]! @derivedFrom(field: "pools")
+  numUsers: String!
+  deposits: [Deposit!]! @derivedFrom(field: "pool")
+  numDeposits: String!
+  numActiveDeposits: String!
+  totalActiveDeposit: String!
+  totalHistoricalDeposit: String!
+  totalInterestPaid: String!
+  unfundedDepositAmount: String!
+  funders: [Funder!]! @derivedFrom(field: "pools")
+  numFunders: String!
+  fundings: [Funding!]! @derivedFrom(field: "pool")
+  numFundings: String!
+  MinDepositPeriod: String!
+  MaxDepositPeriod: String!
+  MinDepositAmount: String!
+  MaxDepositAmount: String!
+  mphMintingMultiplier: String!
+  mphDepositorRewardMultiplier: String!
+  mphFunderRewardMultiplier: String!
+  oneYearInterestRate: String!
+  surplus: String!
+  moneyMarketIncomeIndex: String!
+  oracleInterestRate: String!
+}
+
+type User @entity {
+  id: ID!
+  address: String!
+  pools: [DPool!]!
+  numPools: String!
+  deposits: [Deposit!]! @derivedFrom(field: "user")
+  numDeposits: String!
+  numActiveDeposits: String!
+  totalDepositByPool: [UserTotalDeposit!]! @derivedFrom(field: "user")
+  totalMPHEarned: String!
+  totalMPHPaidBack: String!
+}
+
+type UserTotalDeposit @entity {
+  id: ID!
+  user: User!
+  pool: DPool!
+  totalActiveDeposit: String!
+  totalHistoricalDeposit: String!
+  totalInterestEarned: String!
+  totalHistoricalInterestEarned: String!
+}
+
+type Deposit @entity {
+  id: ID!
+  nftID: String!
+  user: User!
+  pool: DPool!
+  amount: String!
+  maturationTimestamp: String!
+  active: Boolean!
+  depositTimestamp: String!
+  interestEarned: String!
+  fundingID: String!
+  mintMPHAmount: String!
+  takeBackMPHAmount: String!
+  initialMoneyMarketIncomeIndex: String!
+}
+
+type Funder @entity {
+  id: ID!
+  address: String!
+  pools: [DPool!]!
+  numPools: String!
+  fundings: [Funding!]! @derivedFrom(field: "funder")
+  numFundings: String!
+  totalMPHEarned: String!
+  totalInterestByPool: [FunderTotalInterest!]! @derivedFrom(field: "funder")
+}
+
+type FunderTotalInterest @entity {
+  id: ID!
+  funder: Funder!
+  pool: DPool!
+  totalDeficitFunded: String!
+  totalHistoricalDeficitFunded: String!
+  totalInterestEarned: String!
+  totalHistoricalInterestEarned: String!
+  totalRecordedFundedDepositAmount: String!
+}
+
+type Funding @entity {
+  id: ID!
+  nftID: String!
+  funder: Funder!
+  pool: DPool!
+  fromDepositID: String!
+  toDepositID: String!
+  active: Boolean!
+  recordedFundedDepositAmount: String!
+  recordedMoneyMarketIncomeIndex: String!
+  initialFundedDepositAmount: String!
+  fundedDeficitAmount: String!
+  totalInterestEarned: String!
+  mintMPHAmount: String!
+}
+
+type MPHHolder @entity {
+  id: ID!
+  address: String!
+  mphBalance: String!
+  stakedMPHBalance: String!
+  totalHistoricalReward: String!
+}
+
+type MPH @entity {
+  id: ID!
+  totalSupply: String!
+  totalStakedMPHBalance: String!
+  totalHistoricalReward: String!
+  rewardPerSecond: String!
+  rewardPerMPHPerSecond: String!
+}

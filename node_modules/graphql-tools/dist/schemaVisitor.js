@@ -4,13 +4,20 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var graphql_1 = require("graphql");
 var values_1 = require("graphql/execution/values");
@@ -88,7 +95,7 @@ visitorSelector) {
             args[_i - 2] = arguments[_i];
         }
         visitorSelector(type, methodName).every(function (visitor) {
-            var newType = visitor[methodName].apply(visitor, [type].concat(args));
+            var newType = visitor[methodName].apply(visitor, __spreadArrays([type], args));
             if (typeof newType === 'undefined') {
                 // Keep going without modifying type.
                 return true;
@@ -401,10 +408,7 @@ var SchemaDirectiveVisitor = /** @class */ (function (_super) {
     // Optional context object that will be available to all visitor instances
     // via this.context. Defaults to an empty null-prototype object.
     context) {
-        if (context === void 0) { 
-        // Optional context object that will be available to all visitor instances
-        // via this.context. Defaults to an empty null-prototype object.
-        context = Object.create(null); }
+        if (context === void 0) { context = Object.create(null); }
         // If the schema declares any directives for public consumption, record
         // them here so that we can properly coerce arguments when/if we encounter
         // an occurrence of the directive while walking the schema below.

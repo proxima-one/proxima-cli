@@ -1,0 +1,7 @@
+type ConversionRate  {
+  token: String
+  rateSell: Float
+  rateBuy: Float
+  spread: [Float]
+  spreadPercent: Float
+}

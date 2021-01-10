@@ -8,8 +8,8 @@ var TransformRootFields = /** @class */ (function () {
         this.transform = transform;
     }
     TransformRootFields.prototype.transformSchema = function (originalSchema) {
-        var _this = this;
         var _a;
+        var _this = this;
         return visitSchema_1.visitSchema(originalSchema, (_a = {},
             _a[visitSchema_1.VisitSchemaKind.QUERY] = function (type) {
                 return transformFields(type, function (fieldName, field) {

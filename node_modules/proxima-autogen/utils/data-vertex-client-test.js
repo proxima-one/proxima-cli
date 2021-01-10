@@ -22,3 +22,4 @@
 //can make mutations, queries, get, get all for data vertex
 
 //correct typing of vars
+var assert = require('assert')

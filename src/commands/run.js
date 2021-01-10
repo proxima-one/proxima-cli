@@ -1,16 +1,19 @@
 
 `use strict`
 const fse = require('fs-extra');
-const chalk = require('chalk');
 const path = require('path');
+const { exec } = require("child_process");
+//const shell = require('shell')
 
 
 async function run() {
-  runDockerApplication()
+  return true
+  //runDockerApplication()
 }
 
 function runDockerApplication(config) {
-exec('docker-compose run', function(code, stdout, stderr) {
+  exec("docker-compose build")
+exec('docker-compose up', function(code, stdout, stderr) {
   console.log('Exit code:', code);
   console.log('Program output:', stdout);
   console.log('Program stderr:', stderr);
@@ -18,5 +21,4 @@ exec('docker-compose run', function(code, stdout, stderr) {
 
 }
 
-
-module.exports = = {name: "run", function: run, description: "Run the node, either locally or remotely."};
+module.exports = {name: "run", fn: run, description: "Run the node, either locally or remotely."};

@@ -13,3 +13,4 @@
 //dockerfile builds
 
 //docker-compose test pkg
+var assert = require('assert')

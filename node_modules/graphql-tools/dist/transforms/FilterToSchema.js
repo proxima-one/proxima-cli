@@ -9,6 +9,13 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var graphql_1 = require("graphql");
 var implementsAbstractType_1 = require("../implementsAbstractType");
@@ -18,7 +25,7 @@ var FilterToSchema = /** @class */ (function () {
     }
     FilterToSchema.prototype.transformRequest = function (originalRequest) {
         var document = filterDocumentToSchema(this.targetSchema, originalRequest.document);
-        return __assign({}, originalRequest, { document: document });
+        return __assign(__assign({}, originalRequest), { document: document });
     };
     return FilterToSchema;
 }());
@@ -71,7 +78,7 @@ function filterDocumentToSchema(targetSchema, document) {
     });
     return {
         kind: graphql_1.Kind.DOCUMENT,
-        definitions: newOperations.concat(newFragments),
+        definitions: __spreadArrays(newOperations, newFragments),
     };
 }
 function collectFragmentVariables(targetSchema, fragmentSet, validFragments, validFragmentsWithType, usedFragments) {
@@ -138,7 +145,7 @@ function filterSelectionSet(schema, type, validFragments, selectionSet) {
                             return argNames_1.indexOf(arg.name.value) !== -1;
                         });
                         if (args.length !== node.arguments.length) {
-                            return __assign({}, node, { arguments: args });
+                            return __assign(__assign({}, node), { arguments: args });
                         }
                     }
                 }

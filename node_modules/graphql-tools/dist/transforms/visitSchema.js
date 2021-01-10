@@ -1,3 +1,10 @@
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var graphql_1 = require("graphql");
 var schemaRecreation_1 = require("../stitching/schemaRecreation");
@@ -99,7 +106,7 @@ function getTypeSpecifiers(type, schema) {
 }
 function getVisitor(visitor, specifiers) {
     var typeVisitor = null;
-    var stack = specifiers.slice();
+    var stack = __spreadArrays(specifiers);
     while (!typeVisitor && stack.length > 0) {
         var next = stack.pop();
         typeVisitor = visitor[next];

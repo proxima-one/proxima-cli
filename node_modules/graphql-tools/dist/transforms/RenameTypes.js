@@ -22,8 +22,8 @@ var RenameTypes = /** @class */ (function () {
         this.renameScalars = renameScalars;
     }
     RenameTypes.prototype.transformSchema = function (originalSchema) {
-        var _this = this;
         var _a;
+        var _this = this;
         return visitSchema_1.visitSchema(originalSchema, (_a = {},
             _a[visitSchema_1.VisitSchemaKind.TYPE] = function (type) {
                 if (isSpecifiedScalarType_1.default(type) && !_this.renameBuiltins) {
@@ -46,13 +46,13 @@ var RenameTypes = /** @class */ (function () {
             _a));
     };
     RenameTypes.prototype.transformRequest = function (originalRequest) {
-        var _this = this;
         var _a;
+        var _this = this;
         var newDocument = graphql_1.visit(originalRequest.document, (_a = {},
             _a[graphql_1.Kind.NAMED_TYPE] = function (node) {
                 var name = node.name.value;
                 if (name in _this.reverseMap) {
-                    return __assign({}, node, { name: {
+                    return __assign(__assign({}, node), { name: {
                             kind: graphql_1.Kind.NAME,
                             value: _this.reverseMap[name],
                         } });
@@ -68,7 +68,7 @@ var RenameTypes = /** @class */ (function () {
         if (result.data) {
             var data = this.renameTypes(result.data, 'data');
             if (data !== result.data) {
-                return __assign({}, result, { data: data });
+                return __assign(__assign({}, result), { data: data });
             }
         }
         return result;

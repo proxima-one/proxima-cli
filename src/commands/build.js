@@ -1,33 +1,41 @@
 
 `use strict`
-const fse = require('fs-extra');
+const fs = require('fs-extra');
+//const shell = require('shell')
 const chalk = require('chalk');
 const path = require('path');
+const yaml = require('js-yaml');
+const { exec } = require("child_process");
+
+const generator = require('proxima-autogen')
+const msg = require('../common/organization/build_messages.js');
+const dockerComposeFileTemplatePath = require.resolve("../common/templates/docker-compose-data-vertex-template.yml")
 
 
 async function build() {
-  BUILD_STARTING_MESSAGE()
-  let config = getApplicationConfig()
-  buildProximaApplication(config, local)
-  BUILD_ENDING_MESSAGE()
+  msg.BUILD_STARTING_MESSAGE()
+  let config = yaml.safeLoad(fs.readFileSync('./app-config.yml', 'utf8'))
+  let resp = await buildProximaApplication(config)
+  resp = await buildDockerCompose()
+  msg.BUILD_ENDING_MESSAGE()
 }
 
-/*
-Using the config from proxima.yml and the application config...
-Build or update full application folders
-- build schema updates
-- build the data vertex
-- build the dapp aggregator
-- build the database config
-- build the blockchain client
-*/
 async function buildProximaApplication(config, local = true) {
-  generator.buildDataVertex(config)
-  generator.buildDAppAggregator(config)
-  generator.buildDockerCompose(config)
+  let proximaConfig = yaml.safeLoad(fs.readFileSync('./app-config.yml', 'utf8'))
+  generator.buildDataAggregator(config)
+  let resp = await generator.buildDataVertex(config)
+  buildDockerCompose(config)
+  let proximaConfigText = yaml.safeDump(proximaConfig)
+  fs.writeFileSync('./app-config.yml', proximaConfigText);
 }
 
+async function buildDockerCompose() {
+  let proximaConfig = yaml.safeLoad(fs.readFileSync('./.proxima.yml', 'utf8'))
+  let dockerCompose = yaml.safeLoad(fs.readFileSync(dockerComposeFileTemplatePath))
+  dockerCompose.services.data_vertex_node.build = proximaConfig.data_vertex_node
+  dockerCompose.services.data_aggregator.build = proximaConfig.data_aggregator
+  let dockerComposeText = yaml.safeDump(dockerCompose);
+  fs.outputFileSync("./docker-compose.yml", dockerComposeText)
+}
 
-
-
-module.exports = = {name: "build", function: build, description: "Build the data vertex app"};
+module.exports = {name: "build", fn: build, description: "Build the data vertex app"};

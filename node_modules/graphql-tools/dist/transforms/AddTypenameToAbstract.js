@@ -17,7 +17,7 @@ var AddTypenameToAbstract = /** @class */ (function () {
     }
     AddTypenameToAbstract.prototype.transformRequest = function (originalRequest) {
         var document = addTypenameToAbstract(this.targetSchema, originalRequest.document);
-        return __assign({}, originalRequest, { document: document });
+        return __assign(__assign({}, originalRequest), { document: document });
     };
     return AddTypenameToAbstract;
 }());
@@ -45,7 +45,7 @@ function addTypenameToAbstract(targetSchema, document) {
                 });
             }
             if (selections !== node.selections) {
-                return __assign({}, node, { selections: selections });
+                return __assign(__assign({}, node), { selections: selections });
             }
         },
         _a)));

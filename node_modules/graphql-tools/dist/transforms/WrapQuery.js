@@ -9,6 +9,13 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var graphql_1 = require("graphql");
 var WrapQuery = /** @class */ (function () {
@@ -18,8 +25,8 @@ var WrapQuery = /** @class */ (function () {
         this.extractor = extractor;
     }
     WrapQuery.prototype.transformRequest = function (originalRequest) {
-        var _this = this;
         var _a;
+        var _this = this;
         var document = originalRequest.document;
         var fieldPath = [];
         var ourPath = JSON.stringify(this.path);
@@ -37,7 +44,7 @@ var WrapQuery = /** @class */ (function () {
                                 kind: graphql_1.Kind.SELECTION_SET,
                                 selections: [wrapResult]
                             };
-                        return __assign({}, node, { selectionSet: selectionSet });
+                        return __assign(__assign({}, node), { selectionSet: selectionSet });
                     }
                 },
                 leave: function (node) {
@@ -45,13 +52,13 @@ var WrapQuery = /** @class */ (function () {
                 }
             },
             _a));
-        return __assign({}, originalRequest, { document: newDocument });
+        return __assign(__assign({}, originalRequest), { document: newDocument });
     };
     WrapQuery.prototype.transformResult = function (originalResult) {
         var rootData = originalResult.data;
         if (rootData) {
             var data = rootData;
-            var path = this.path.slice();
+            var path = __spreadArrays(this.path);
             while (path.length > 1) {
                 var next = path.shift();
                 if (data[next]) {

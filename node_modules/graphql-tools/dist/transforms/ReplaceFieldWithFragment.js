@@ -30,7 +30,7 @@ var ReplaceFieldWithFragment = /** @class */ (function () {
     }
     ReplaceFieldWithFragment.prototype.transformRequest = function (originalRequest) {
         var document = replaceFieldsWithFragments(this.targetSchema, originalRequest.document, this.mapping);
-        return __assign({}, originalRequest, { document: document });
+        return __assign(__assign({}, originalRequest), { document: document });
     };
     return ReplaceFieldWithFragment;
 }());
@@ -57,7 +57,7 @@ function replaceFieldsWithFragments(targetSchema, document, mapping) {
                     });
                 }
                 if (selections_1 !== node.selections) {
-                    return __assign({}, node, { selections: selections_1 });
+                    return __assign(__assign({}, node), { selections: selections_1 });
                 }
             }
         },
@@ -117,7 +117,7 @@ function deduplicateSelection(nodes) {
                         return map;
                     }
                     else {
-                        return __assign({}, map, (_a = {}, _a[node.alias.value] = node, _a));
+                        return __assign(__assign({}, map), (_a = {}, _a[node.alias.value] = node, _a));
                     }
                 }
                 else {
@@ -125,7 +125,7 @@ function deduplicateSelection(nodes) {
                         return map;
                     }
                     else {
-                        return __assign({}, map, (_b = {}, _b[node.name.value] = node, _b));
+                        return __assign(__assign({}, map), (_b = {}, _b[node.name.value] = node, _b));
                     }
                 }
             }
@@ -134,16 +134,16 @@ function deduplicateSelection(nodes) {
                     return map;
                 }
                 else {
-                    return __assign({}, map, (_c = {}, _c[node.name.value] = node, _c));
+                    return __assign(__assign({}, map), (_c = {}, _c[node.name.value] = node, _c));
                 }
             }
             case 'InlineFragment': {
                 if (map.__fragment) {
                     var fragment = map.__fragment;
-                    return __assign({}, map, { __fragment: concatInlineFragments(fragment.typeCondition.name.value, [fragment, node]) });
+                    return __assign(__assign({}, map), { __fragment: concatInlineFragments(fragment.typeCondition.name.value, [fragment, node]) });
                 }
                 else {
-                    return __assign({}, map, { __fragment: node });
+                    return __assign(__assign({}, map), { __fragment: node });
                 }
             }
             default: {

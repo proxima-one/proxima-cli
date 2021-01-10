@@ -9,6 +9,13 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var graphql_1 = require("graphql");
 var AddArgumentsAsVariablesTransform = /** @class */ (function () {
@@ -18,7 +25,7 @@ var AddArgumentsAsVariablesTransform = /** @class */ (function () {
     }
     AddArgumentsAsVariablesTransform.prototype.transformRequest = function (originalRequest) {
         var _a = addVariablesToRootField(this.schema, originalRequest.document, this.args), document = _a.document, newVariables = _a.newVariables;
-        var variables = __assign({}, originalRequest.variables, newVariables);
+        var variables = __assign(__assign({}, originalRequest.variables), newVariables);
         return {
             document: document,
             variables: variables,
@@ -96,13 +103,13 @@ function addVariablesToRootField(targetSchema, document, args) {
                         };
                     }
                 });
-                newSelectionSet.push(__assign({}, selection, { arguments: Object.keys(newArgs_1).map(function (argName) { return newArgs_1[argName]; }) }));
+                newSelectionSet.push(__assign(__assign({}, selection), { arguments: Object.keys(newArgs_1).map(function (argName) { return newArgs_1[argName]; }) }));
             }
             else {
                 newSelectionSet.push(selection);
             }
         });
-        return __assign({}, operation, { variableDefinitions: operation.variableDefinitions.concat(Object.keys(variables).map(function (varName) { return variables[varName]; })), selectionSet: {
+        return __assign(__assign({}, operation), { variableDefinitions: operation.variableDefinitions.concat(Object.keys(variables).map(function (varName) { return variables[varName]; })), selectionSet: {
                 kind: graphql_1.Kind.SELECTION_SET,
                 selections: newSelectionSet,
             } });
@@ -112,7 +119,7 @@ function addVariablesToRootField(targetSchema, document, args) {
         newVariables[variableNames[name]] = args[name];
     });
     return {
-        document: __assign({}, document, { definitions: newOperations.concat(fragments) }),
+        document: __assign(__assign({}, document), { definitions: __spreadArrays(newOperations, fragments) }),
         newVariables: newVariables,
     };
 }

@@ -9,6 +9,13 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var graphql_1 = require("graphql");
 var implementsAbstractType_1 = require("../implementsAbstractType");
@@ -20,7 +27,7 @@ var ExpandAbstractTypes = /** @class */ (function () {
     }
     ExpandAbstractTypes.prototype.transformRequest = function (originalRequest) {
         var document = expandAbstractTypes(this.targetSchema, this.mapping, this.reverseMapping, originalRequest.document);
-        return __assign({}, originalRequest, { document: document });
+        return __assign(__assign({}, originalRequest), { document: document });
     };
     return ExpandAbstractTypes;
 }());
@@ -102,11 +109,11 @@ function expandAbstractTypes(targetSchema, mapping, reverseMapping, document) {
             });
         }
     });
-    var newDocument = __assign({}, document, { definitions: operations.concat(newFragments) });
+    var newDocument = __assign(__assign({}, document), { definitions: __spreadArrays(operations, newFragments) });
     var typeInfo = new graphql_1.TypeInfo(targetSchema);
     return graphql_1.visit(newDocument, graphql_1.visitWithTypeInfo(typeInfo, (_a = {},
         _a[graphql_1.Kind.SELECTION_SET] = function (node) {
-            var newSelections = node.selections.slice();
+            var newSelections = __spreadArrays(node.selections);
             var parentType = graphql_1.getNamedType(typeInfo.getParentType());
             node.selections.forEach(function (selection) {
                 if (selection.kind === graphql_1.Kind.INLINE_FRAGMENT) {
@@ -158,7 +165,7 @@ function expandAbstractTypes(targetSchema, mapping, reverseMapping, document) {
                 });
             }
             if (newSelections.length !== node.selections.length) {
-                return __assign({}, node, { selections: newSelections });
+                return __assign(__assign({}, node), { selections: newSelections });
             }
         },
         _a)));

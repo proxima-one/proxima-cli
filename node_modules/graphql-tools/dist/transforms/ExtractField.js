@@ -43,7 +43,7 @@ var ExtractField = /** @class */ (function () {
                 enter: function (node) {
                     fieldPath.push(node.name.value);
                     if (ourPathTo === JSON.stringify(fieldPath) && fromSelection) {
-                        return __assign({}, node, { selectionSet: fromSelection });
+                        return __assign(__assign({}, node), { selectionSet: fromSelection });
                     }
                 },
                 leave: function (node) {
@@ -51,7 +51,7 @@ var ExtractField = /** @class */ (function () {
                 },
             },
             _b));
-        return __assign({}, originalRequest, { document: newDocument });
+        return __assign(__assign({}, originalRequest), { document: newDocument });
     };
     return ExtractField;
 }());

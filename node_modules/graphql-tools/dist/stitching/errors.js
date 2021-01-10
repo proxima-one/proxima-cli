@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -47,12 +47,12 @@ function annotateWithChildrenErrors(object, childrenErrors) {
             }
             var index = error.path[1];
             var current = byIndex_1[index] || [];
-            current.push(__assign({}, error, { path: error.path.slice(1) }));
+            current.push(__assign(__assign({}, error), { path: error.path.slice(1) }));
             byIndex_1[index] = current;
         });
         return object.map(function (item, index) { return annotateWithChildrenErrors(item, byIndex_1[index]); });
     }
-    return __assign({}, object, (_a = {}, _a[exports.ERROR_SYMBOL] = childrenErrors.map(function (error) { return (__assign({}, error, (error.path ? { path: error.path.slice(1) } : {}))); }), _a));
+    return __assign(__assign({}, object), (_a = {}, _a[exports.ERROR_SYMBOL] = childrenErrors.map(function (error) { return (__assign(__assign({}, error), (error.path ? { path: error.path.slice(1) } : {}))); }), _a));
 }
 exports.annotateWithChildrenErrors = annotateWithChildrenErrors;
 function getErrorsFromParent(object, fieldName) {

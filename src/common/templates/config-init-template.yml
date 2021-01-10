@@ -1,4 +1,4 @@
-id: #Can be auto-generated
+id:
 name: Name of Project
 repo:
 description:
@@ -24,7 +24,7 @@ datasources:
         address: #Contract address
         abi: CONTRACT_NAME
       handlers:
-        dir: #./handlers/DATASOURCE NAME
+          - dir: #./handlers/DATASOURCE NAME
           - functionHandlers: functionHandlers.js
           - eventHandlers: eventHandlers.js
           - transactionHandlers: transactionHandlers.js

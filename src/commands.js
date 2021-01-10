@@ -15,7 +15,7 @@ let commandFiles = ["init.js", "gen.js", "build.js", "deploy.js", "run.js"];
 
 for (let fileIndex in  commandFiles) {
   let command = require("./commands/" + commandFiles[fileIndex]);
-  commands[command.name] = {action: command.function, description: command.description};
+  commands[command.name] = {action: command.fn, description: command.description};
 }
 
 module.exports = commands;

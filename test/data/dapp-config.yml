@@ -1,7 +1,7 @@
 id: Project id
 name: Name of Project
 repo:
-version: 
+version:
 description:
 schema:
   file: ./schema/schema.graphql
@@ -31,13 +31,13 @@ datasources:
           - functionPolls:  functionPolls.js
       contracts:
         - name: MooniswapFactory
-          file: ./abis/mooniswap-factory.json
+          file: ./abi/mooniswap-factory.json
         - name: ERC20
-          file: ./abis/ERC20.json
+          file: ./abi/ERC20.json
         - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
+          file: ./abi/ERC20SymbolBytes.json
         - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
+          file: ./abi/ERC20NameBytes.json
     - datasource:
         name: MooniSwapPair
         client:
@@ -54,6 +54,6 @@ datasources:
             - functionPolls:  functionPolls.js
         contracts:
           - name: Pair
-            file: ./contracts/mooniswap.json
+            file: ./abi/mooniswap.json
           - name: ERC20
-            file: ./abis/ERC20.json
+            file: ./abi/ERC20.json

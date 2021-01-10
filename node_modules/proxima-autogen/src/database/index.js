@@ -1,10 +1,11 @@
 'use strict'
+const appGen = require("./table-gen.js");
 
-function generateApplicationDatabase(config) {
-  let outputSchema = "./database/db-config-"+config.name+".yaml";
+function generateApplicationDatabase(config, output = "") {
+  let outputSchema = output || "./database/db-config.yaml";
   let schemaFile = config.schema.file
   let appConfig = config
-  generateApplicationDatabase(appConfig, schemaFile, outputSchema)
+  appGen.generateApplicationDatabase(appConfig, schemaFile, outputSchema)
 }
 
-module.exports = generateApplicationDatabases;
+module.exports = {generateApplicationDatabase};

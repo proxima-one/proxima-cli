@@ -11,4 +11,4 @@ async function deploy() {
 
 
 
-module.exports = = {name: "deploy", function: deploy, description: "Deploy the app to the Proxima node."};
+module.exports = {name: "deploy", fn: deploy, description: "Deploy the app to the Proxima node."};

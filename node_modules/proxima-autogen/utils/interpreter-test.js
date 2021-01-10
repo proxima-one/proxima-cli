@@ -7,3 +7,4 @@
 //finds: all events and functions
 
 //returns handlers/information for these events and functions
+var assert = require('assert')

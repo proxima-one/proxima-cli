@@ -6,8 +6,8 @@ var FilterTypes = /** @class */ (function () {
         this.filter = filter;
     }
     FilterTypes.prototype.transformSchema = function (schema) {
-        var _this = this;
         var _a;
+        var _this = this;
         return visitSchema_1.visitSchema(schema, (_a = {},
             _a[visitSchema_1.VisitSchemaKind.TYPE] = function (type) {
                 if (_this.filter(type)) {

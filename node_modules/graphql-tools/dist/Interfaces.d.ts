@@ -1,4 +1,4 @@
-import { GraphQLSchema, GraphQLField, ExecutionResult, GraphQLType, GraphQLFieldResolver, GraphQLResolveInfo, GraphQLIsTypeOfFn, GraphQLTypeResolver, GraphQLScalarType, GraphQLNamedType, DocumentNode } from 'graphql';
+import { GraphQLSchema, GraphQLField, ExecutionResult, GraphQLType, GraphQLFieldResolver, GraphQLResolveInfo, GraphQLIsTypeOfFn, GraphQLTypeResolver, GraphQLScalarType, GraphQLNamedType, DocumentNode, ASTNode } from 'graphql';
 import { SchemaDirectiveVisitor } from './schemaVisitor';
 export declare type UnitOrList<Type> = Type | Array<Type>;
 export interface IResolverValidationOptions {
@@ -58,7 +58,7 @@ export declare type MergeInfo = {
 export declare type IFieldResolver<TSource, TContext, TArgs = Record<string, any>> = (source: TSource, args: TArgs, context: TContext, info: GraphQLResolveInfo & {
     mergeInfo: MergeInfo;
 }) => any;
-export declare type ITypedef = (() => ITypedef[]) | string | DocumentNode;
+export declare type ITypedef = (() => ITypedef[]) | string | DocumentNode | ASTNode;
 export declare type ITypeDefinitions = ITypedef | ITypedef[];
 export declare type IResolverObject<TSource = any, TContext = any, TArgs = any> = {
     [key: string]: IFieldResolver<TSource, TContext, TArgs> | IResolverOptions<TSource, TContext> | IResolverObject<TSource, TContext>;

@@ -17,3 +17,4 @@
   //dockerfile? (build)
 
   //dockerfile (tests?) (or docker-compose tests)
+var assert = require('assert')

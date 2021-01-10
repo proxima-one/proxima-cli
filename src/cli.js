@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 const { Command } = require('commander');
-const commands = require('./commands');
+const commands = require('./commands.js');
 const program = new Command();
 
 program.version('0.0.2', '-v, --version')

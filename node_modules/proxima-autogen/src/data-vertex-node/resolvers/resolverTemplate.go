@@ -1,10 +1,9 @@
-package resolvers
+package resolver
 //go:generate go run github.com/99designs/gqlgen
 import (
-	"context"
-	models  //models pkg "github.com/proxima-one/binance-chain-subgraph/pkg/models"
-	gql //gql pkg "github.com/proxima-one/binance-chain-subgraph/pkg/gql"
-	dataloader //dataloader pkg "github.com/proxima-one/binance-chain-subgraph/pkg/dataloader"
+	_ models "github.com/proxima-one/proxima-data-vertex/pkg/models"
+	gql "github.com/proxima-one/proxima-data-vertex/pkg/gql"
+	dataloader "github.com/proxima-one/proxima-data-vertex/pkg/dataloaders"
 )
 
 type Resolver struct{

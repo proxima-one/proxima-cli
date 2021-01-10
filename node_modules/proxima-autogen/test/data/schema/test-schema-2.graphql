@@ -1,0 +1,15 @@
+type ConversionRate  {
+  token: String!
+  rateSell: Float
+  rateBuy: Float
+  spread: Float!
+  spreadPercent: [Float]!
+}
+
+input ConversionRateInput {
+  token: String!
+  rateSell: Float!
+  rateBuy: Float!
+  spread: Float!
+  spreadPercent: Float!
+}

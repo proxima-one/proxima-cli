@@ -3,7 +3,9 @@ const fse = require('fs-extra');
 const chalk = require('chalk');
 const path = require('path');
 const yaml = require('js-yaml');
-const AppConfigTemplate = require("../common/templates/config-init-template.yml");
+const msg = require('../common/organization/init_messages.js');
+const appConfigTemplate = yaml.safeLoad(fse.readFileSync(require.resolve("../common/templates/config-init-template.yml")));
+const proximaConfigTemplate = yaml.safeLoad(fse.readFileSync(require.resolve('../common/templates/proximaConfigTemplate.yml')))
 
 
 /*
@@ -15,23 +17,21 @@ Init folders:
 */
 async function init(project_name) {
   if (isInitialized()) {
-    ALREADY_INITIALIZED_MESSAGE()
+    msg.ALREADY_INITIALIZED_MESSAGE()
   } else  {
-    INIT_STARTING_MESSAGE();
+    msg.INIT_STARTING_MESSAGE();
     initProject(project_name);
-    INIT_ENDING_MESSAGE();
+    msg.INIT_ENDING_MESSAGE();
 }
 }
 
 function initProject(project_name) {
-  initProjectFolders(project_name)
+  let folders = initProjectFolders(project_name)
   let location = "./" + project_name + "/"
-  writeProximaConfig(location + ".proxima.yml")
-  writeAppConfig(location, project_name);
+  writeConfig(location, project_name, folders.schema, folders.abi);
 }
 
 function initProjectFolders(project_name) {
-  let config = createGenerationConfigFile();
   let directory = project_name || ".";
   let parent = path.dirname(__filename).split(path.sep).pop();
   if (parent == directory) {
@@ -39,16 +39,29 @@ function initProjectFolders(project_name) {
   }
   fse.ensureDirSync(directory + "/schema")
   fse.ensureDirSync(directory + "/abi")
+  return {schema: directory + "/schema", abi: directory + "/abis"}
 }
 
-function writeAppConfig(location, project_name) {
-  let appConfig = yaml.safeLoad(fs.readFileSync("../common/templates/config-init-template.yml", 'utf8'));
-  appConfig.name = project_name
-  fse.outputFile(location + "app-config.yml", appConfig);
+function writeConfig(location, project_name, schemaDir, abiDir) {
+  let appConfig = appConfigTemplate;
+  appConfig.name = project_name;
+  appConfig.version = "0.0.1"
+  appConfig.schema.dir = schemaDir
+  appConfig.schema.file = "./schema/schema.graphql"
+  fse.writeFileSync(schemaDir + "/schema.graphql", "");
+  //appConfig.abi.dir = abiDir
+  let appConfigText = yaml.safeDump(appConfig)
+  fse.writeFileSync(location + "app-config.yml", appConfigText);
+
+  let proximaConfig = proximaConfigTemplate;
+  proximaConfig.name = project_name;
+  proximaConfig.app_config = "app-config.yml"
+  let proximaConfigText = yaml.safeDump(proximaConfig)
+  fse.writeFileSync(location + ".proxima.yml", proximaConfigText);
 }
 
 function isInitialized() {
-  return fse.existsSync("./.proxima.yml")
+  return false//fse.existsSync("./.proxima.yml")
 }
 
-module.exports = {name: "init [project_name]", function: init, description: "Initiatlize the project at the correct directory, with the config file, and folders for abi."};
+module.exports = {name: "init [project_name]", fn: init, description: "Initiatlize the project at the correct directory, with the config file, and folders for abi."};
