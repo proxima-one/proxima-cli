@@ -19,47 +19,44 @@ remove
 deploy
 -->
 
+### Requirements 
+Before installing and using the Proxima Command-line interface it is necessary to have: 
+- Go 
+- Docker 
+- npm/yarn
+
 #### Install Proxima Command-line-interface
 
 ```
 yarn add -g proxima-cli
 ```
 
-## Initialize Project
+## Initialize Your Project
 
 ```
 proxima init PROJECT_NAME
 ```
 
-Output Directory
+Proxima will initialize an output directory for your project, with the correct structure to begin the project.
 ```
 PROJECT_NAME
-+ contracts
++ abi
   - abi files here
 + schema
   - schema files here
-+ config
-  - config
+app_config.yml
 ```
 
-### Contracts
-You can include the raw text of the ABI code. For this instance, we have already loaded an abi code for the IDEX exchange.
-Featured in abi/idex_abi.json.
-
-
-
-## Add code Project
-
-- code to be generated
+ABI 
 ```
 + contracts
   - smartcontract1_name.json
   - smartcontract2_name.json
 ```
+Schema 
+GraphQL Schema 
 
-- config update
-
-#### Update Config
+App Config 
 
 For now we look at the config.yml to include the contract address, the abi code, and datasource.
 
@@ -72,19 +69,11 @@ datasource: Ethereum
 id: ID
 owner: Owner
 ```
-
-#### Clients
-
-#### Schema creation
-
-- create the schema
-
-
-
 ## Generating project code
+Before rtunning generate ensure that the app_config.yml, the abi, and the schema. 
 
 ```
-proxima generate
+proxima generate .
 ```
 
 This generates the smart contract handlers (shown in DApp aggregator, and entities)
@@ -92,6 +81,7 @@ This generates the smart contract handlers (shown in DApp aggregator, and entiti
 Output Directory
 ```
 PROJECT_NAME
+
 + DApp aggregator
   - smartcontract1_name
     - functionHandlers
@@ -102,16 +92,9 @@ PROJECT_NAME
 ```
 
 
-
-## Filling out function and eventHandlers
-
-
-
-
-
 ## Building Project
 ```
-proxima build TYPE
+proxima build .
 ```
 - config setup
 - remote building of the container ...
