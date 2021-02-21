@@ -1,8 +1,12 @@
 
 
-# Proxima Project Creation
+# Proxima CLI
 
-Creating a project.
+[![CircleCI](https://circleci.com/gh/proxima-one/ProximaDB.svg?style=svg)](https://circleci.com/gh/proxima-one/ProximaDB)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
+
+The Proxima Command-line interface (CLI) enables the fast and efficient, initialization, generation, testing, and deployment of data vertices. It is also where developers will be able to manage their identity, run nodes, and scale data.
 
 <!--
 
@@ -19,77 +23,61 @@ remove
 deploy
 -->
 
-#### Install Proxima Command-line-interface
+## Quick Start
+
+
+### Requirements
+- node
+- docker
+- golang
+- docker compose
+- npm/yarn
+
+### Installation
 
 ```
 yarn add -g proxima-cli
 ```
 
-## Initialize Project
+## Usage
+
+### version
+```
+proxima version
+```
+
+### help
+```
+proxima help
+```
+
+### init
+This initializes the data vertex of the given name. This includes the project folder, the app config, and the schema.
 
 ```
-proxima init PROJECT_NAME
+proxima init DATA_VERTEX_NAME
 ```
 
-Output Directory
+> **Note** In order to go on to the next step and *generate* the data vertex it is necessary for the developer to add in the abi, the schema, and to update the app_config to include the datasources used by the data vertex.
+
 ```
 PROJECT_NAME
 + contracts
   - abi files here
 + schema
   - schema files here
-+ config
-  - config
+- app_config.yml
 ```
 
-### Contracts
-You can include the raw text of the ABI code. For this instance, we have already loaded an abi code for the IDEX exchange.
-Featured in abi/idex_abi.json.
-
-
-
-## Add code Project
-
-- code to be generated
-```
-+ contracts
-  - smartcontract1_name.json
-  - smartcontract2_name.json
-```
-
-- config update
-
-#### Update Config
-
-For now we look at the config.yml to include the contract address, the abi code, and datasource.
-
-
-```yaml
-name: [smart contract name]
-abi: ./abi/idex_abi.json
-contract: '0x2a0c0DBEcC7E4D658f48E01e3fA353F44050c208'
-datasource: Ethereum
-id: ID
-owner: Owner
-```
-
-#### Clients
-
-#### Schema creation
-
-- create the schema
-
-
-
-## Generating project code
+### generate
+This generates the smart contract handler templates and the data aggregator used by the data vertex, as well as the database entities that are used in the data vertex.
 
 ```
 proxima generate
 ```
 
-This generates the smart contract handlers (shown in DApp aggregator, and entities)
+> **Note** In order to go on to the next step and *build* the data vertex it is necessary for the developer to fill out the function handlers for the data vertex.
 
-Output Directory
 ```
 PROJECT_NAME
 + DApp aggregator
@@ -101,28 +89,16 @@ PROJECT_NAME
     - ...
 ```
 
+### build
+This builds the data vertex and its resolvers, as well as the docker-compose file that can be used to run the data vertex.
 
-
-## Filling out function and eventHandlers
-
-
-
-
-
-## Building Project
 ```
-proxima build TYPE
+proxima build
 ```
-- config setup
-- remote building of the container ...
-- if local then pulls dockerfiles, builds the containers, tags them
-- creates the docker compose file
-- creates the ID and address
 
 
-## Running the project
+### run
 
-### Starting
 ```
 proxima start ID/NAME
 ```
@@ -132,7 +108,8 @@ Starting the node....
 Server is running on http://localhost:4000
 ```
 
-### Stopping
+## stop
+
 ```
 proxima stop ID/NAME
 ```
@@ -142,17 +119,92 @@ Stopping the node....
 Server is running on http://localhost:4000
 ```
 
-### Deploying the project
+### test
+
+```
+proxima test
+```
+The test component of the Proxima CLI has the potential to perform tests on a variety of components.
+- Proxima Data Vertex SDK Plug-in
+- Data Vertex
+- Data Aggregator
+
+### benchmark
+**TO BE IMPLEMENTED**
+```
+proxima benchmark ID/NAME [args]
+```
+
+
+### deploy
+**TO BE IMPLEMENTED**
 ```
 proxima deploy ID/NAME
 ```
 
-Response of success, with id/name
 
-### Pulling previous project
+### pull
+**TO BE IMPLEMENTED**
+
 ```
 proxima pull ID/NAME
 ```
+
+
+
+
+## Important Structures
+Within the [Data Vertex Name] directory:
+
+```
++ Data Aggregator
++ Data Vertex
++ Database
++ Proxima SDK
+- docker-compose.yml
+
++ schema
++ handlers
++ abi
+- app_config.yml
+```
+
+
+### ABI
+The abi folder contains the raw json abi of the various smart contracts used.
+```
++ abi
+  - smartcontract1_name.json
+  - smartcontract2_name.json
+```
+
+### Schema
+The schema represents the graphql entities that are written by the developer. The CLI will automatically generate graphql query and mutation operations for these.
+```
++ schema
+  - schema.graphql
+```
+
+### Handlers
+The handlers folder contains the event handlers for the data vertex. These are responsible for taking in the blockchain events, and pushing them to the data vertex.
+
+### App Config
+For now we look at the app_config.yml to include the contract address, the abi code, and datasource.
+
+```yaml
+name: [smart contract name]
+abi: ./abi/idex_abi.json
+contract: '0x2a0c0DBEcC7E4D658f48E01e3fA353F44050c208'
+datasource: Ethereum
+id: ID
+owner: Owner
+```
+
+<!--
+This should include:
+- Contributing Guidelines
+- Code of Conduct
+- Good first issues/Pull requests
 
 
 ## Advanced Configurations
@@ -187,3 +239,30 @@ datasource: Ethereum
 id: ID
 owner: Owner
 ```
+-->
+
+## Contributing
+<!--
+This should include:
+- Contributing Guidelines
+- Code of Conduct
+- Good first issues/Pull requests
+-->
+Read below to learn how you can take part in improving our project.
+
+### Code of Conduct
+
+We have adopted a Code of Conduct that we expect project participants to adhere to. Please read [the full text]() so that you can understand what actions will and will not be tolerated.
+
+### Contributing Guide
+
+Read our [contributing guide]() to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes.
+
+### Good First Issues
+
+To help you get your feet wet and get you familiar with our contribution process, we have a list of [good first issues]() that contain bugs which have a relatively limited scope. This is a great place to get started.
+
+## Licensing
+
+This project is licensed under MIT licensing guidelines.
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE)
