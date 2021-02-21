@@ -57,6 +57,8 @@ This initializes the data vertex of the given name. This includes the project fo
 ```
 proxima init DATA_VERTEX_NAME
 ```
+Schema
+GraphQL Schema
 
 > **Note** In order to go on to the next step and *generate* the data vertex it is necessary for the developer to add in the abi, the schema, and to update the app_config to include the datasources used by the data vertex.
 
@@ -73,13 +75,14 @@ PROJECT_NAME
 This generates the smart contract handler templates and the data aggregator used by the data vertex, as well as the database entities that are used in the data vertex.
 
 ```
-proxima generate
+proxima generate .
 ```
 
 > **Note** In order to go on to the next step and *build* the data vertex it is necessary for the developer to fill out the function handlers for the data vertex.
 
 ```
 PROJECT_NAME
+
 + DApp aggregator
   - smartcontract1_name
     - functionHandlers
@@ -94,6 +97,9 @@ This builds the data vertex and its resolvers, as well as the docker-compose fil
 
 ```
 proxima build
+## Building Project
+```
+proxima build .
 ```
 
 
