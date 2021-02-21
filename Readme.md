@@ -97,10 +97,8 @@ This builds the data vertex and its resolvers, as well as the docker-compose fil
 
 ```
 proxima build
-## Building Project
 ```
-proxima build .
-```
+
 
 
 ### run
