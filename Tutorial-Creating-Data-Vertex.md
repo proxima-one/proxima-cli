@@ -1,5 +1,13 @@
-# Integrating the blockchain 
-Requirements 
+# Creating a data vertex for your project
+
+
+Hardware Requirements: 
+
+
+## Installation and Setup
+
+
+
 
 ## Initializing the Project 
 
@@ -12,50 +20,79 @@ Requirements
 - Schema
 
 
-### App_config (project information)
+## Updating datasources and schema 
 
-### Variables 
-
-### Schema 
-
-### Datasources 
-
-###What does the user need to do
+### What does the user need to do
 - Schema 
 - Add their schema files 
 - Datasources 
 - Project information 
 - ABI 
 
+#### app_config 
 
+#### Variables 
+
+#### Schema 
+
+#### Datasources 
 
 ## Generating the Project 
-### Command 
+The project vertex is ready to be generated after you have updated the datasources, abi, and schema. This is done by running:
+
 `proxima generate`
+
 ### What does it do? 
 Generates the correct data handlers, blockchain client, and processes the schema 
-### What does the user need to do 
 
-Handlers for everything 
 
+## Writing the handlers for the generated datasources 
+After generating the blockchain-client, the database, and the proxima sdk plug-in, it is now possible to define the handlers for each datasource.
+
+
+### Using the SDK with data vertex handlers
+
+
+## Handlers 
+
+### Block Handlers
+
+What does it look like, what needs to be done?
+
+Example:
+
+### Event Handlers 
+What does it look like, what needs to be done?
+
+Example:
+
+### Transaction Handlers 
+What does it look like, what needs to be done?
+
+Example:
 
 ## Building the project 
-### Command 
+Once the datasource handlers have been updated, the data vertex is now ready to be built. To do this, simply run the command while in the data vertex project directory.
+
 `proxima build`
+
 ### What does it do? 
 Builds the proxima data vertex, including the files
-### What does the user do to progress to the next steps?
-Nothing 
+
 
 
 ## Running the project 
-### Command 
-proxima run
-What does it do? 
-Playground, and the api 
 
+`proxima run`
 
+or 
 
+`docker-compose up`
+
+Port
+IP
+
+Playground
 
 
 ## Other topics
