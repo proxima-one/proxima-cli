@@ -54,15 +54,35 @@ function defaultConfig(config) {
   newConfig.id = config.id || "DefaultID"
   newConfig.owner = config.owner || "None"
   newConfig.version = config.version || "0.0.0"
-  newConfig.config = config.config || {cache: "0", compression: "0", batching: "0"}
+  //default values
+  let cache = "5m"
+  let sleep = "10m"
+  let compression = "36h"
+  let batching = "500ms"
+  let header = ""
+  let blockNum = "0"
+  let version = "0.0.0"
+  newConfig.config = config.config || {cache: cache, sleep: sleep, compression: compression, batching: batching}
   return newConfig
 }
 
-function table(dbName, tableName) {
-  return "\t\t- table:\n" +
-  "\t\t\tname: " + tableName + "\n" +
-  "\t\t\tid: " + dbName +"-"+ tableName + " \n";
+function table(dbName, tableName, cacheExpiration = "5m") {
+  let cache = "5m"
+  let sleep = "10m"
+  let compression = "36h"
+  let batching = "500ms"
+  let header = "Root"
+  let blockNum = "0"
+  let version = "0.0.0"
+  return "\t\t- name: " + tableName + "\n" +
+  "\t\t  id: " + dbName +"-"+ tableName + " \n" +
+  "\t\t  version: " +  version + " \n" +
+  "\t\t  blockNum: " +  blockNum + " \n" +
+  "\t\t  header: " +  header + " \n" +
+  "\t\t  compression: " +  compression + " \n" +
+  "\t\t  batching: " +  batching + " \n" +
+  "\t\t  sleep: " +  sleep + " \n" +
+  "\t\t  cacheExpiration: " +  cacheExpiration + " \n"
 }
-
 
 module.exports = {generateApplicationDatabase}

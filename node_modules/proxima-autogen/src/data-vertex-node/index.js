@@ -19,7 +19,7 @@ async function buildDataVertex(config) {
   populateDataVertex(config)
   resp = await generateDataVertexGQL(config)
   buildResolvers("./DataVertex/pkg/resolvers/schema.resolvers.go", "./DataVertex/pkg/resolvers/resolver_fns.go")
-  //resp = await buildDataVertexServer(config)
+  resp = await buildDataVertexServer(config)
 }
 
 
@@ -52,7 +52,7 @@ async function initDataVertex(config) {
         // Otherwise resolve the promise:
         resolve();
     });
-  }, 20000);
+  }, 10000);
     return resp
 }
 
@@ -71,17 +71,15 @@ async function generateDataVertexGQL(config) {
         // Otherwise resolve the promise:
         resolve();
     });
-  }, 20000);
+  }, 10000);
     return resp
 }
 
 async function buildDataVertexServer(config) {
   let location = "."
-  //fs.copySync(resolverMainTemplatePath, location + '/DataVertex/pkg/resolvers/resolver.go')
-  //fs.copySync(dataVertexServerTemplatePath, location + '/DataVertex/main.go')
   fs.copySync(dockerFileTemplatePath, location + '/DataVertex/dockerfile')
   let resp = await new Promise((resolve, reject) => {
-  exec("go build ./DataVertex/main.go", async function(error, stdout, stderr) {
+  exec("cd 'DataVertex' && go get && go build", async function(error, stdout, stderr) {
         console.log('Running node...');
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
@@ -94,7 +92,7 @@ async function buildDataVertexServer(config) {
         // Otherwise resolve the promise:
         resolve();
     });
-    });
+    }, 10000);
 }
 
 module.exports = {buildDataVertex, buildResolvers};

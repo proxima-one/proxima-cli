@@ -68,17 +68,17 @@ generateEventHandlerText(contractEvent) {
   eventHandlerString += "(event) {\n"
   eventHandlerString += "Error('Not Implemented')\n"
   eventHandlerString += "}\n"
-  eventHandlerString += "eventHandler." + contractEvent.name + "=" + + contractEvent.name + "Handler";
+  eventHandlerString += "eventHandlers." + contractEvent.name + "= " + contractEvent.name + "Handler";
   return eventHandlerString
 }
 
 generateFunctionHandlerText(contractFunction) {
     let functionHandlerString = "\n \n"
-    functionHandlerString += "contract " + contractFunction.name + "FunctionHandler"
+    functionHandlerString += "function " + contractFunction.name + "FunctionHandler"
     functionHandlerString += "(blockNumber, blockHead) {\n"
     functionHandlerString += "Error('Not Implemented')\n"
     functionHandlerString += "}\n"
-    functionHandlerString += "functionHandler." + contractFunction.name + "= contract" + + contractFunction.name + "FunctionHandler;";
+    functionHandlerString += "functionHandlers." + contractFunction.name + "=" + contractFunction.name + "FunctionHandler;"
     return functionHandlerString
   }
 }

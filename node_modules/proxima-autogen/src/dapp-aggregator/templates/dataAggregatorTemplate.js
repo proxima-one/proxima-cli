@@ -3,6 +3,7 @@
 const fs = require('fs-extra');
 const generatedVertexClient = require('./vertex-client/index.js');
 const blockchainClients = require('general-blockchain-client');
+
 const yaml = require('js-yaml');
 
 function init_datasource(datasource_config, clients, vertexClient) {

@@ -13,9 +13,10 @@ function processSchema(config, file = "") {
   //return the config file
 }
 
+
 function getSchemaDir(config) {
   //search the schema directory
   //replace the config
 }
 
-module.exports = {processSchema};
+module.exports = {processSchema: processSchema, createTestStructs: processer.createTestStructs};

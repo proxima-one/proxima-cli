@@ -33,7 +33,7 @@ function createResolverFunction(functionText) {
 	body += generateResolverBodyText(functionText)
 
 	body = functionText.replace("panic(fmt.Errorf(\"not implemented\"))", body);
-		return body
+		return body, nil
 }
 
 function generateDefaultInputText(type) {
@@ -128,5 +128,7 @@ function getTableName(head) {
 	tableName += "s"
 	return tableName
 }
+
+//name and tail end (either pushing/unmarshalling from input, the other is to unmarshall response)
 
 module.exports = {buildResolvers}
