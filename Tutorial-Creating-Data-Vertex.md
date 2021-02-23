@@ -1,5 +1,11 @@
-# Integrating the blockchain 
-Requirements 
+# Creating a data vertex for your project
+
+
+Hardware Requirements: 
+
+
+## Installation and Setup
+
 
 
 
@@ -23,7 +29,7 @@ Requirements
 - Project information 
 - ABI 
 
-#### App_config (project information)
+#### app_config 
 
 #### Variables 
 
@@ -83,12 +89,10 @@ or
 
 `docker-compose up`
 
-### Playground api 
+Port
+IP
 
-
-### API Gateway
-port 
-ip
+Playground
 
 
 ## Other topics
