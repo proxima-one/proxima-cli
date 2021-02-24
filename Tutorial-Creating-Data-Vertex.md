@@ -47,9 +47,8 @@ After initializing our project, we need to add the schema and datasources to the
 
 - `id`: string the
 - `name`: Name of the Project
-- `owner`:
-- `description`:
-
+- `owner`: Owner of the project
+- `description`: Descrpition of the project
 
 
 ### Adding your Project Schema
@@ -73,8 +72,6 @@ type Transaction {
 
 ### Creation of datasources
 
-
-
 The next step is the creation of the datasources.
 - `name`:
 - network 
@@ -87,14 +84,35 @@ The next step is the creation of the datasources.
   - Name 
   - File 
 
+In our case, 
 
-**Example**
+```yaml
+datasources:
+  - datasource:
+      name: cUSDCPool
+      client:
+        name: ethereum
+        network: mainnet
+        startBlock: 10634502
+      source:
+        address: '0xEB2F0A3045db12366A9f6A8e922D725D86a117EB'
+        abi: DInterest
+        startBlock: 11172905
+      contracts:
+        - name: DInterest
+          file: ./abi/DInterest.json
+        - name: IInterestOracle
+          file: ./abi/IInterestOracle.json
+        - name: ERC20
+          file: ./abi/ERC20.json
+        - name: MPHMinter
+          file: ./abi/MPHMinter.json
+```
 
-Adding the ABI
 
 
 ## Generating the Project
-The project vertex is ready to be generated after you have updated the datasources, abi, and schema. This is done by running:
+The datasources and schema we have added, will be used during the generation of the project handlers and the database schema for the data vertex. We can automatically generate these files by running:
 
 ```
 proxima generate
@@ -103,15 +121,18 @@ proxima generate
 This command generates a set of new folders in the project directory:
 - `blockchain`: this stores the information regarding the blockchain clients. It is not necessary
 Generates the correct data handlers, blockchain client, and processes the schema.
-- `database` - the folder for smart contract abi files
-- `handlers` - the folder for smart contract abi files
-- `schema/schema.graphql` - this represents the new values. Gives (search, range, get, put)
+- `database` - the folder for the configuration of the database, it is composed of tables representing the entities, and provides ability to search, range, get, put
+- `handlers` - the folder that represents the handlers that will be used by your data vertex's datasources. 
+- `schema/schema.graphql` - this represents a generated schema file that generates default queries and mutations for each entity.
+
+This may seem like a lot of data, but don't worry we will only have change files in the **handlers** folder.
 
 ## Writing the handlers for the generated datasources
 After generating the blockchain-client, the database, and the Proxima SDK plug-in, it is now possible to define the handlers for each datasource.
 
 ### Handlers
 Any of the handlers can be removed from the data vertex implementation, by removing the name from the configuration. All handlers have access to the Data Vertex Entities seen in the schema through the Proxima SDK. This allows for the updates, gets, and removes for the data. The CLI automatically generates an SDK pluy-in that enables the 
+
 
 
 #### Block Handlers
@@ -126,11 +147,6 @@ function blockHandler(block) {
 }
 ```
 
-**Example**
-```
-
-```
-
 #### Event Handlers
 What does it look like, what needs to be done?
 
@@ -139,26 +155,6 @@ function EDepositHandler(event) {
 Error('Not Implemented')
 }
 eventHandlers.EDeposit= EDepositHandler
-```
-
-Example:
-```
-
-```
-
-#### Transaction Handlers
-Transactions associated with datasources
-What does it look like, what needs to be done?
-
-```javascript
-function transactionHandlers(transaction) {
-  //
-}
-```
-
-Example:
-```
-
 ```
 
 ## Building the project
@@ -172,7 +168,13 @@ This command will generate folders for the proxima data vertex, including the fi
 
 - `data-vertex` - the folder for smart contract abi files
 - `docker-compose.yml` - the folder for docker compose
+- `proxima-sdk-js` - the SDK that can be used by 
+- `data-aggregator` - the aggregator responsible 
 
+Once 
+
+> Any other imple
+> Requires 
 
 
 ## Running the project
@@ -196,8 +198,10 @@ For now it is possible to run from the
 - `database`
 - `data aggregator`
 
+## Connecting to the project
+Once the project is running, we can immediately connect to it through the 
+- graphql interface with schema and queries 
+- Proxima SDK 
 
-## Other topics
-- Testing and Benchmarking the project
-- Deployment of the project, usage of SDK
-- Connecting to projects
+If you want to learn how to connect to a data vertex through the Proxima SDK check out our tutorial.
+
