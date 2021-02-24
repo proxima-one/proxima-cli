@@ -6,10 +6,7 @@ Follow along to learn how to create a data for 88mph, or use this framework to i
 
 ## Installation and Setup
 
-> Hardware Requirements:
->
-
-Before we can begin, we have to find out how to 
+Before we can begin, we have to make sure that we have installed all of the dependencies required. Check the list below to see what is needed!
 
 #### Requirements
 
@@ -17,10 +14,9 @@ Before we can begin, we have to find out how to
 - docker 
 - docker-compose
 - go 
-- proxima cli
 
 #### Installing Proxima CLI
-Installation of the Proxima CLI can be done through yarn. This only needs to be done once. For more information on the CLI, check out the repo.
+An additional requirement for this is the Proxima CLI. Installation of the Proxima CLI can be done through yarn. This only needs to be done once. For more information on the CLI, check out the repo.
 ```
 yarn add -g proxima-cli
 ```
@@ -32,7 +28,7 @@ proxima -v
 
 ## Initializing your Project
 
-It is time to initialize our project.
+Once we have everytthing installed, it is time to begin. First navigate to an empty directory, and run the following command with the desired name of your project. It is time to initialize our project!
 
 ```
 proxima init [PROJECT_NAME]
@@ -40,21 +36,23 @@ proxima init [PROJECT_NAME]
 
 In this case, `[PROJECT_NAME]` is set to be `88mph-data-vertex`
 
-This will initialize a named project directory for your data vertex.
+This will initialize a named project directory for your data vertex `./[PROJECT_Name]`, additionally populate the project directory with:
 - `abi` - the folder for smart contract abi files
 - `app-config.yml` - the configuration for the data vertex
-- `schema` - the folder to write graphql schema.
+- `schema` - the folder to write your graphql schema.
 
 
 ## Updating datasources and schema
-During this process we will be adding the first configuration settings. First look at the `app-config.yml` file, which is responsible
+After initializing our project, we need to add the schema and datasources to the configuration of our data vertex. First let's look at the `app-config.yml` file, and make  which is responsible
 
 - `id`: string the
 - `name`: Name of the Project
 - `owner`:
 - `description`:
 
-### Schema
+
+
+### Adding your Project Schema
 The schema files are done through graphql ,
 Note, it is only necessary to generate the
 See the graphql documentation here.
