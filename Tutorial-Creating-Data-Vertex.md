@@ -56,10 +56,12 @@ The schema files are done through graphql ,
 Note, it is only necessary to generate the
 See the graphql documentation here.
 
-`schema/schema.graphql`
+```yaml
+schema:
+  file: ./schema/schema.graphql
+  dir: 88mph-data-vertex/schema
+```
 
-
-**Example**
 
 ```javascript
 type Transaction {
@@ -68,7 +70,6 @@ type Transaction {
   STRING
 }
 ```
-
 
 ### Creation of datasources
 
@@ -164,26 +165,17 @@ Once the datasource handlers have been updated, the data vertex is now ready to 
 proxima build
 ```
 
-This command will generate folders for the proxima data vertex, including the files:
+This command builds the main data vertex component, the data aggregator, and the vertex client sdk plug-in to connect to the data vertex.
+In addition to building these components, this command also generates a `docker-compose.yml` that is used to run the data vertex. 
 
 - `data-vertex` - the folder for smart contract abi files
-- `docker-compose.yml` - the folder for docker compose
 - `proxima-sdk-js` - the SDK that can be used by 
-- `data-aggregator` - the aggregator responsible 
-
-Once 
-
+- `data-aggregator` - the component responsible for aggregating the datasources and their handlers, pushing them to the data vertex
+- `docker-compose.yml` - the file for docker compose
 
 
 ## Running the project
-The   
-
-- `IP`: 0.0.0.0
-- `Port`: 4000
-
-Check out the `docker-compose.yml` to update the configurations for your data vertex!
-
-If `proxima run` does not work, run `docker-compose up`.
+Here comes the sweet part! On the command-line, run `proxima run` to get your server up and running. (Note: If `proxima run` does not work, run `docker-compose up`.) 
 
 ```
 proxima run
@@ -196,9 +188,10 @@ Congratulations you have a running data vertex! If you want to it out locally vi
 
 
 ## Connecting to the project
-Once the project is running, we can immediately connect to it through the 
-- graphql interface with schema and queries 
-- Proxima SDK 
+Once the project is running, we can immediately connect to it through the a react native interface. 
 
+While this gives us the data, it lacks the ability to 
+
+We can use gain  Proxima SDK 
 If you want to learn how to connect to a data vertex through the Proxima SDK check out our tutorial.
 
