@@ -5,12 +5,12 @@ If you are already running a client
 ## Installation and Set-up
 Requirements
 
-####Installing Requirements
+#### Installing Requirements
 ```
 p
 ```
 
-####Installing Proxima SDK
+#### Installing Proxima SDK
 Installation of the Proxima CLI can be done through yarn. This only needs to be done once. For more information on the CLI, check the repo.
 ```
 yarn add -g proxima-cli
