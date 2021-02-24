@@ -118,22 +118,19 @@ After generating the blockchain-client, the database, and the Proxima SDK plug-i
 ### Handlers
 Any of the handlers can be removed from the data vertex implementation, by removing the name from the configuration.
 
-All handlers have access to the Data Vertex Entities seen in the schema through the Proxima SDK. This allows for the updates, gets, and removes for the data.
-
-**Example**
-```
-
-```
-
-The CLI automatically generates the
+All handlers have access to the Data Vertex Entities seen in the schema through the Proxima SDK. This allows for the updates, gets, and removes for the data. The CLI automatically generates an SDK pluy-in that enables the 
 
 
 #### Block Handlers
 BlockHandlers are written for each datasource, such that . They take in as input blocks, and process them.  
 What does it look like, what needs to be done?
 
-```
-
+```javascript
+function blockHandler(block) {
+  //traditional blockchain blockHandler()
+  //indexer?
+  //functionPolls()
+}
 ```
 
 **Example**
@@ -144,8 +141,11 @@ What does it look like, what needs to be done?
 #### Event Handlers
 What does it look like, what needs to be done?
 
-```
-
+```javascript
+function EDepositHandler(event) {
+Error('Not Implemented')
+}
+eventHandlers.EDeposit= EDepositHandler
 ```
 
 Example:
@@ -157,8 +157,10 @@ Example:
 Transactions associated with datasources
 What does it look like, what needs to be done?
 
-```
-
+```javascript
+function transactionHandlers(transaction) {
+  //
+}
 ```
 
 Example:
@@ -175,14 +177,18 @@ proxima build
 
 This command will generate folders for the proxima data vertex, including the files:
 
-
-
 - `data-vertex` - the folder for smart contract abi files
 - `docker-compose.yml` - the folder for docker compose
 
 
 
 ## Running the project
+The 
+
+- `IP`: 0.0.0.0
+- `Port`: 4000
+- `Playground`: 0.0.0.0:4000/query
+
 ```
 proxima run
 ```
@@ -191,9 +197,11 @@ or
 docker-compose up
 ```
 
-- `IP`: 0.0.0.0
-- `Port`: 4000
-- `Playground`: 0.0.0.0:4000/query
+Within the 'docker-compose.yml' the data vertex can be configured. 
+For now it is possible to run from the 
+- `data vertex`:
+- `database`
+- `data aggregator`
 
 
 ## Other topics
