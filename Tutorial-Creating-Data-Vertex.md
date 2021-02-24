@@ -1,20 +1,26 @@
 # Creating a data vertex for your project
 
-
-
-
+Let's get started with Proxima by making a data vertex for our decentralized application project. 
+This is going to give us a fast, query layer for our application, that maintains the security of the blockchain your project is deployed on. To do this we are going to create a data vertex, which will connect to the datasources that are relevant to our DApp, transforms and loads these events into an authenticated database that can be queried through a graphQL api. 
+Follow along to learn how to create a data for 88mph, or use this framework to implement your own data vertex!
 
 ## Installation and Setup
 
 > Hardware Requirements:
 >
 
+Before we can begin, we have to find out how to 
+
 #### Requirements
 
-
+- npm/yarn
+- docker 
+- docker-compose
+- go 
+- proxima cli
 
 #### Installing Proxima CLI
-Installation of the Proxima CLI can be done through yarn. This only needs to be done once. For more information on the CLI, check the repo.
+Installation of the Proxima CLI can be done through yarn. This only needs to be done once. For more information on the CLI, check out the repo.
 ```
 yarn add -g proxima-cli
 ```
@@ -41,15 +47,7 @@ This will initialize a named project directory for your data vertex.
 
 
 ## Updating datasources and schema
-During this process we will be updating 3 separate files.
-
-- `schema`
-- `datasources`
-
-
-
-#### App Config
-First look at the `app-config.yml` file, which is responsible
+During this process we will be adding the first configuration settings. First look at the `app-config.yml` file, which is responsible
 
 - `id`: string the
 - `name`: Name of the Project
@@ -81,20 +79,19 @@ type Transaction {
 
 The next step is the creation of the datasources.
 - `name`:
+- network 
 - `(information)`:
 - `client`:
+  - Source 
+  - Name 
+  - StartBlock
 - `abi`:
+  - Name 
+  - File 
 
-The client refers to
 
 **Example**
 
-
-(can then be used in datasources)
-
-
-#### (ABI)
-`schema/schema.graphql`
 Adding the ABI
 
 
@@ -116,9 +113,7 @@ Generates the correct data handlers, blockchain client, and processes the schema
 After generating the blockchain-client, the database, and the Proxima SDK plug-in, it is now possible to define the handlers for each datasource.
 
 ### Handlers
-Any of the handlers can be removed from the data vertex implementation, by removing the name from the configuration.
-
-All handlers have access to the Data Vertex Entities seen in the schema through the Proxima SDK. This allows for the updates, gets, and removes for the data. The CLI automatically generates an SDK pluy-in that enables the 
+Any of the handlers can be removed from the data vertex implementation, by removing the name from the configuration. All handlers have access to the Data Vertex Entities seen in the schema through the Proxima SDK. This allows for the updates, gets, and removes for the data. The CLI automatically generates an SDK pluy-in that enables the 
 
 
 #### Block Handlers
