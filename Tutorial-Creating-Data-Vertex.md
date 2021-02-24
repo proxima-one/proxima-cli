@@ -175,16 +175,20 @@ In addition to building these components, this command also generates a `docker-
 
 
 ## Running the project
-Here comes the sweet part! On the command-line, run `proxima run` to get your server up and running. (Note: If `proxima run` does not work, run `docker-compose up`.) 
+Here comes the sweet part! On the command-line, run `proxima run` to get your server up and running. (Note: If `proxima run` does not work, run `docker-compose up`.) This will run an open ingress at: 
+- `ip` : `0.0.0.0`
+- `port`: `4000`
 
 ```
 proxima run
 ```
 
-Congratulations you have a running data vertex! If you want to it out locally visit.
 
-`GraphQL API`: 0.0.0.0:4000
-`GraphQL Playground`: 0.0.0.0:4000/query
+
+Congratulations you have a running data vertex! If you want to it locally visit.
+
+- `GraphQL API`: `0.0.0.0:4000`
+- `GraphQL Playground`: `0.0.0.0:4000/query`
 
 
 ## Connecting to the project
