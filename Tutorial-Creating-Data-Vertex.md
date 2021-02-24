@@ -173,30 +173,27 @@ This command will generate folders for the proxima data vertex, including the fi
 
 Once 
 
-> Any other imple
-> Requires 
 
 
 ## Running the project
-The 
+The   
 
 - `IP`: 0.0.0.0
 - `Port`: 4000
-- `Playground`: 0.0.0.0:4000/query
+
+Check out the `docker-compose.yml` to update the configurations for your data vertex!
+
+If `proxima run` does not work, run `docker-compose up`.
 
 ```
 proxima run
 ```
-or
-```
-docker-compose up
-```
 
-Within the 'docker-compose.yml' the data vertex can be configured. 
-For now it is possible to run from the 
-- `data vertex`:
-- `database`
-- `data aggregator`
+Congratulations you have a running data vertex! If you want to it out locally visit.
+
+`GraphQL API`: 0.0.0.0:4000
+`GraphQL Playground`: 0.0.0.0:4000/query
+
 
 ## Connecting to the project
 Once the project is running, we can immediately connect to it through the 
