@@ -41,12 +41,7 @@ This will initialize a named project directory for your data vertex.
 
 
 ## Updating datasources and schema
-During this process we will be updating 3 separate files.
-
-- `schema`
-- `datasources`
-
-
+Before
 
 #### App Config
 First look at the `app-config.yml` file, which is responsible
@@ -83,19 +78,38 @@ The next step is the creation of the datasources.
 - `name`:
 - `(information)`:
 - `client`:
-- `abi`:
 
 The client refers to
-
-**Example**
-
-
 (can then be used in datasources)
 
-
-#### (ABI)
-`schema/schema.graphql`
+- `abi`:
+(ABI)
+`abi/schema.`
 Adding the ABI
+
+**Example**
+```yaml
+datasources:
+  - datasource:
+      name: cUSDCPool
+      client:
+        name: ethereum
+        network: mainnet
+        startBlock: 10634502
+      source:
+        address: "0xEB2F0A3045db12366A9f6A8e922D725D86a117EB"
+        abi: DInterest
+        startBlock: 11172905
+      contracts:
+        - name: DInterest
+          file: ./abi/DInterest.json
+        - name: IInterestOracle
+          file: ./abi/IInterestOracle.json
+        - name: ERC20
+          file: ./abi/ERC20.json
+        - name: MPHMinter
+          file: ./abi/MPHMinter.json
+```
 
 
 ## Generating the Project
@@ -111,6 +125,8 @@ Generates the correct data handlers, blockchain client, and processes the schema
 - `database` - the folder for smart contract abi files
 - `handlers` - the folder for smart contract abi files
 - `schema/schema.graphql` - this represents the new values. Gives (search, range, get, put)
+
+
 
 ## Writing the handlers for the generated datasources
 After generating the blockchain-client, the database, and the Proxima SDK plug-in, it is now possible to define the handlers for each datasource.

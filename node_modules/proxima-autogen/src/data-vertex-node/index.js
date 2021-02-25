@@ -10,16 +10,16 @@ const resolverMainTemplatePath = require.resolve('./resolvers/resolverTemplate.g
 const dockerFileTemplatePath = require.resolve('./dockerfile');
 const generateDataVertexBash = require.resolve('./data-vertex-builder.sh');
 
-var git_url = "https://github.com/proxima-one/Proxima-data-vertex.git"
+var git_url = "https://github.com/proxima-one/data-vertex.git"
 
 const buildResolvers = resolverGen.buildResolvers
 
 async function buildDataVertex(config) {
   let resp = await initDataVertex(config)
   populateDataVertex(config)
-  resp = await generateDataVertexGQL(config)
+  let esp = await generateDataVertexGQL(config)
   buildResolvers("./DataVertex/pkg/resolvers/schema.resolvers.go", "./DataVertex/pkg/resolvers/resolver_fns.go")
-  resp = await buildDataVertexServer(config)
+  let sp = await buildDataVertexServer(config)
 }
 
 

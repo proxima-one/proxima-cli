@@ -21,7 +21,7 @@
     "js-yaml": "^3.13.1",
     "mocha": "^8.2.1",
     "process": "^0.11.10",
-    "proxima-autogen": "0.0.19",
+    "proxima-autogen": "0.0.21",
     "web3": "^1.0.0-beta.55"
   }
 }

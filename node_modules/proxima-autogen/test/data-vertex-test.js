@@ -28,36 +28,37 @@ function cleanup() {
 describe('data vertex gen', async function() {
   //correct file structure
   it('should run without errors', async function() {
-    this.timeout(10000)
+    this.timeout(20000)
     let config = await dataVertexSetup()
     let resp = await autogen.buildDataVertex(config)
     assert(!fs.pathExistsSync("./DataVertex/pkg/resolvers/schema.resolvers.go"))
     assert(fs.pathExistsSync("./DataVertex/pkg/resolvers/resolver_fns.go"), true)
   });
   //gqlgen works
-  it('should have correctly cloned the data vertex with necessary files', function() {
+  it('should have correctly cloned the data vertex with necessary files', async function() {
     //ensure that it is able to clone and get the repository
     assert(fs.pathExistsSync("./DataVertex"), true)
   });
   //main fn works
-  it('should correctly import schema, database, app-config and proxima config', function() {
+  it('should correctly import schema, database, app-config and proxima config', async function() {
     assert(fs.pathExistsSync("./DataVertex/database/db-config.yaml"), true)
     assert(fs.pathExistsSync("./DataVertex/schema/schema.graphql"), true)
     assert(fs.pathExistsSync("./DataVertex/app-config.yml"), true)
     assert(fs.pathExistsSync("./DataVertex/.proxima.yml"), true)
   });
   //gqlgen works
-  it('should correctly use gqlgen generate', function() {
+  it('should correctly use gqlgen generate', async function() {
     //unknown how this is done.
     assert(fs.pathExistsSync("./DataVertex/database/db-config.yaml"), true)
   });
   //resolvers in correct positioning
-  it('should correctly have new resolvers generated', function() {
+  it('should correctly have new resolvers generated', async function() {
     assert(!fs.pathExistsSync("./DataVertex/pkg/resolvers/schema.resolvers.go"))
     assert(fs.pathExistsSync("./DataVertex/pkg/resolvers/resolver_fns.go"), true)
+    //    panic(fmt.Errorf("not implemented"))
   });
   //dockerfile builds
-  it('should correctly create the main file', function() {
+  it('should correctly create the main file', async function() {
     assert(fs.pathExistsSync("./DataVertex/main.go"), true)
     assert(fs.pathExistsSync("./DataVertex/dockerfile"), true)
     cleanup()

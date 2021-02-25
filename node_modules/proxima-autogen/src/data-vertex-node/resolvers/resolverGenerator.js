@@ -6,6 +6,11 @@ function buildResolvers(fileIn, fileOut) {
 
 	let {head, resolverFns}  = parseFunctions(resolverText)
 	let newResolverText = "package resolvers\n\n"
+	newResolverText += "import ( \n"
+	newResolverText += 'models "github.com/proxima-one/proxima-data-vertex/pkg/models"\n'
+	newResolverText += 'json "github.com/json-iterator/go"\n'
+	newResolverText += '"context"\n'
+	newResolverText += ")\n\n"
 
 
 	for (const functionText of resolverFns) {
@@ -29,29 +34,31 @@ function parseFunctions(resolverText) {
 
 function createResolverFunction(functionText) {
 	let body = generateDefaultInputText(functionText)
-	//console.log(body)
 	body += generateResolverBodyText(functionText)
 
 	body = functionText.replace("panic(fmt.Errorf(\"not implemented\"))", body);
-		return body, nil
+	return body
 }
 
 function generateDefaultInputText(type) {
 	let defaults = "args := DefaultInputs;\n"
-	let defaultProofInput = "if (prove != nil ) { args['prove'] = *prove }\n";
-	let defaultLimit = "if (limit != nil) {args['limit'] = *limit}\n" +
-		"if (order != nil) {args['order'] = *order}\n";
+	let defaultProofInput = "if prove != nil { args[\"prove\"] = *prove }\n";
+	let defaultLimit = "if limit != nil {args[\"limit\"] = *limit}\n" +
+		"if order != nil {args[\"order\"] = *order}\n";
 	type = getType(type)
-	let defaultText = defaults + defaultProofInput
+	let defaultText = defaults
 	switch (type) {
 		case 'get':
-			defaultText += "args['id'] = id\n"
+			defaultText += defaultProofInput
+			defaultText += "args[\"id\"] = id\n"
 			break
 		case 'query':
+			defaultText += defaultProofInput
 			defaultText += defaultLimit
-			defaultText += "args['query'] = query\n"
+			defaultText += "args[\"query\"] = query\n"
 			break
 		case "getAll":
+			defaultText += defaultProofInput
 			defaultText += defaultLimit
 			break
 	}
@@ -68,39 +75,52 @@ function generateResolverBodyText(functionString) {
 	//let  = functionString.includes("*queryResolver")
 	// Resolver)
 	// (ctx context.Context,
-
+	body += "table, _ := r.db.GetTable(\"" + tableName + "\")\n";
+	let returnV = "return value, nil\n"
 	switch (type) {
+
 		case 'get':
-			body += "result, err := r.db.tables[" + tableName + "].get(args.id, args.prove)\n";
+			body += "result, err := table.Get(id, args[\"prove\"].(bool))\n";
+			returnV = "return &value, nil\n"
 			break
 		case 'mutation':
-			body += "result, err := r.db.tables[" + tableName + "].put(input.id, input, args.prove)\n";
+			body += "_, err := table.Put(*input.ID, input, args[\"prove\"].(bool), args)\n";
+			body += "boolResult := true\n"
+			body += 	"if err != nil {\n" +
+				"  return &boolResult, err\n" +
+				"}\n"
 			break
-		case "getAll":
-			//body += "result, err := r.db.tables['" + tableName + "'].range(args.id, args.prove)\n";
+		case 'getAll':
+			body += "result, err := table.Get(args[\"id\"].(string),  args[\"prove\"].(bool))\n";
 			break
 		case 'query':
-			body += "result, err := r.db.tables['" + tableName + "'].query(args.id, args.prove)\n";
+			body += "result, err := table.Get(args[\"id\"].(string),  args[\"prove\"].(bool))\n";
 			break
 	}
-	body += 	"if err != nil {\n" +
-		"  return false, err\n" +
-		"}\n"
-
 	if (!isQuery) {
-		body += "return true, nil\n"
+		body += "return &boolResult, nil\n"
 		return body
 	}
-
-	let output = getOutput(functionString)
-	body += "value := " + output + "{}\n" +
-	"json.Unmarshal(result, &value)\n" +
-	"return value, nil\n"
-	return body
+	if (isQuery) {
+		body += 	"if err != nil {\n" +
+			"  return nil, err\n" +
+			"}\n"
+	}
+	let output = getOutput(type, tableName, functionString)
+	body += "data := result.GetValue();\n"
+	body += "var value " + output + ";\n" +
+	"json.Unmarshal(data, &value)\n"
+	return body + returnV
 }
 
-function getOutput(functionString) {
-
+function getOutput(type, tableName, functionString) {
+	let outputStr = "models." + tableName.substr(0, tableName.length-1)
+	let returnType = ""
+	if (type == "getAll" || type == 'query') {
+		return "[]*" + outputStr
+	} else {
+		return outputStr
+	}
 }
 
 function getType(head) {
@@ -110,11 +130,11 @@ function getType(head) {
 		return {type, isQuery}
 	}
 	isQuery = true
-	if (head.includes("Query(")) {
+	if (head.includes("Search(")) {
 		type = "query"
 		return {type, isQuery}
 	}
-	if (head.includes("[]*model.") ){
+	if (head.includes("[]*models.") ){
 		type = 'getAll'
 		return {type, isQuery}
 	}
@@ -123,7 +143,7 @@ function getType(head) {
 }
 
 function getTableName(head) {
-	let tableName = head.replace(" ", "").split("model.")[1].split(")")[0]
+	let tableName = head.replace(" ", "").split("models.")[1].split(")")[0]
 	tableName = tableName.replace(", error", "")
 	tableName += "s"
 	return tableName
