@@ -43,27 +43,23 @@ This will initialize a named project directory for your data vertex `./[PROJECT_
 
 
 ## Updating datasources and schema
-After initializing our project, we need to add the schema and datasources to the configuration of our data vertex. First let's look at the `app-config.yml` file, and make  which is responsible
-
+After initializing our project, we need to add the schema and datasources to the configuration of our data vertex. First let's look at the `app-config.yml` file, which contains the configurtions for the data vertex as well as basic information:
 - `id`: id of the project
 - `name`: Name of the Project
-- `owner`: Owner of the project
+- `repo`: Owner of the project
 - `description`: Descrpition of the project
 
 
 ### Adding your Project Schema
-The schema files are done through graphql ,
-Note, it is only necessary to generate the
-See the graphql documentation here.
+The first step is to determine the entities that your project will use. This is done through a GraphQL schema file. Note that it is only necessary to build the entities for the schema because the queries and mutations are generated later through the CLI.
 
 ```yaml
 schema:
   file: ./schema/schema.graphql
   dir: 88mph-data-vertex/schema
 ```
-
-The schema 
-
+ 
+<!--
 ```javascript
 type Transaction {
   INT
@@ -71,22 +67,13 @@ type Transaction {
   STRING
 }
 ```
+-->
 
 ### Creation of datasources
-
-
-The next step is the creation of the datasources.
-
-
-- `name`: 
-
-
-- `client`:
-  - Source 
-  - Name 
-  - `startBlock`
- 
- 
+The next step in the development process, is the creation of the datasources that will be used by our data vertex. In the `app_config.yml`, we can see the template for `datasources` with a single element. Each `datasource` contains several important components:
+- `client`: this is the blockchain client used by the datasource
+- `source`: this is the smart contract source used by the client 
+- `contracts`: these are the smart contracts that are referenced
 
 ```yaml
 datasources:
@@ -111,18 +98,7 @@ datasources:
           file: ./abi/MPHMinter.json
 ```
 
-
- 
- - `source`:
-  - Source 
-  - Name 
-  - `startBlock`
-
-- `contracts`:
-  - `name` 
-  - `file`
-
-
+The example above shows a our set-up of a datasource for 88mph. The name is `cUSDCPool`, it uses an ethereum client, and is using the smart contract `DInterest` which references the following smart contracts. Note: it is necessary to update the `abi` folder so that you have the correct files.
 
 ## Generating the Project
 The datasources and schema we have added, will be used during the generation of the project handlers and the database schema for the data vertex. We can automatically generate these files by running:
@@ -142,8 +118,6 @@ This may seem like a lot of data, but don't worry we will only have change files
 
 ## Writing the handlers for the generated datasources
 After generating the blockchain-client, the database, and the Proxima SDK plug-in, it is now possible to define the handlers for each datasource.Any of the handlers can be removed from the data vertex implementation, by removing the name from the configuration. All handlers have access to the Data Vertex Entities seen in the schema through the Proxima SDK. This allows for the updates, gets, and removes for the data. The CLI automatically generates an SDK pluy-in that enables them to interact with the entities they have within the data vertex.
-
-Usage of the SDK 
 
 ### Event Handlers
 What does it look like, what needs to be done?
