@@ -45,7 +45,7 @@ This will initialize a named project directory for your data vertex `./[PROJECT_
 ## Updating datasources and schema
 After initializing our project, we need to add the schema and datasources to the configuration of our data vertex. First let's look at the `app-config.yml` file, and make  which is responsible
 
-- `id`: string the
+- `id`: id of the project
 - `name`: Name of the Project
 - `owner`: Owner of the project
 - `description`: Descrpition of the project
@@ -62,6 +62,7 @@ schema:
   dir: 88mph-data-vertex/schema
 ```
 
+The schema 
 
 ```javascript
 type Transaction {
@@ -73,19 +74,19 @@ type Transaction {
 
 ### Creation of datasources
 
+
 The next step is the creation of the datasources.
-- `name`:
-- network 
-- `(information)`:
+
+
+- `name`: 
+
+
 - `client`:
   - Source 
   - Name 
-  - StartBlock
-- `abi`:
-  - Name 
-  - File 
-
-In our case, 
+  - `startBlock`
+ 
+ 
 
 ```yaml
 datasources:
@@ -111,6 +112,17 @@ datasources:
 ```
 
 
+ 
+ - `source`:
+  - Source 
+  - Name 
+  - `startBlock`
+
+- `contracts`:
+  - `name` 
+  - `file`
+
+
 
 ## Generating the Project
 The datasources and schema we have added, will be used during the generation of the project handlers and the database schema for the data vertex. We can automatically generate these files by running:
@@ -129,16 +141,28 @@ Generates the correct data handlers, blockchain client, and processes the schema
 This may seem like a lot of data, but don't worry we will only have change files in the **handlers** folder.
 
 ## Writing the handlers for the generated datasources
-After generating the blockchain-client, the database, and the Proxima SDK plug-in, it is now possible to define the handlers for each datasource.
+After generating the blockchain-client, the database, and the Proxima SDK plug-in, it is now possible to define the handlers for each datasource.Any of the handlers can be removed from the data vertex implementation, by removing the name from the configuration. All handlers have access to the Data Vertex Entities seen in the schema through the Proxima SDK. This allows for the updates, gets, and removes for the data. The CLI automatically generates an SDK pluy-in that enables them to interact with the entities they have within the data vertex.
 
-### Handlers
-Any of the handlers can be removed from the data vertex implementation, by removing the name from the configuration. All handlers have access to the Data Vertex Entities seen in the schema through the Proxima SDK. This allows for the updates, gets, and removes for the data. The CLI automatically generates an SDK pluy-in that enables the 
+Usage of the SDK 
 
-
-
-#### Block Handlers
-BlockHandlers are written for each datasource, such that . They take in as input blocks, and process them.  
+### Event Handlers
 What does it look like, what needs to be done?
+
+```javascript
+function EDepositHandler(event) {
+   Error('Not Implemented')
+}
+eventHandlers.EDeposit= EDepositHandler
+```
+
+
+
+<!--  
+### Block Handlers
+BlockHandlers are written for each datasource, such that . They take in as input blocks, and process them.  
+What does it look like? 
+
+What needs to be done?
 
 ```javascript
 function blockHandler(block) {
@@ -147,16 +171,8 @@ function blockHandler(block) {
   //functionPolls()
 }
 ```
+-->
 
-#### Event Handlers
-What does it look like, what needs to be done?
-
-```javascript
-function EDepositHandler(event) {
-Error('Not Implemented')
-}
-eventHandlers.EDeposit= EDepositHandler
-```
 
 ## Building the project
 Once the datasource handlers have been updated, the data vertex is now ready to be built. To do this, simply run the command while in the data vertex project directory.
@@ -183,8 +199,6 @@ Here comes the sweet part! On the command-line, run `proxima run` to get your se
 proxima run
 ```
 
-
-
 Congratulations you have a running data vertex! If you want to it locally visit.
 
 - `GraphQL API`: `0.0.0.0:4000`
@@ -192,10 +206,7 @@ Congratulations you have a running data vertex! If you want to it locally visit.
 
 
 ## Connecting to the project
-Once the project is running, we can immediately connect to it through the a react native interface. 
+Once it is running, we can immediately connect to and receive data from the data vertex through its graphQL server, or through the Proxima SDK. If there is no concern about security it is possible to use your data vertex as a standalone server, but without the SDK it is impossible to authenticate the data given in each request. 
 
-While this gives us the data, it lacks the ability to 
-
-We can use gain  Proxima SDK 
-If you want to learn how to connect to a data vertex through the Proxima SDK check out our tutorial.
+If we use the Proxima SDK to connect to a data vertex it is possible to open up a variety of new features, most notably the abiltiy to verifiy and authenticate the data being requested. If you want to learn how to connect to a data vertex through the Proxima SDK check out our tutorial.
 
