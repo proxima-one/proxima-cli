@@ -20,14 +20,25 @@ async function build() {
   msg.BUILD_ENDING_MESSAGE()
 }
 
-async function buildProximaApplication(config, local = true) {
+async function buildProximaApplication(config, test = true, local = true) {
   let proximaConfig = yaml.safeLoad(fs.readFileSync('./app-config.yml', 'utf8'))
   generator.buildDataAggregator(config)
   let resp = await generator.buildDataVertex(config)
   buildDockerCompose(config)
+  if (test) {
+    generator.createTestStructs(config, "", "")
+  }
   let proximaConfigText = yaml.safeDump(proximaConfig)
   fs.writeFileSync('./app-config.yml', proximaConfigText);
 }
+
+// async function buildTestStructs(config) {
+//   let inputSchemaFileName = config.schema
+//   let outputJSONFileName = ""
+//   //directory
+//   //ensure directory
+//   generator.createTestStructs(inputSchemaFileName, outputJSONFileName)
+// }
 
 async function buildDockerCompose() {
   let proximaConfig = yaml.safeLoad(fs.readFileSync('./.proxima.yml', 'utf8'))

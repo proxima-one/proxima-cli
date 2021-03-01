@@ -63,24 +63,19 @@ describe('schema processing', function() {
 
   describe('generating test cases from schema', function() {
     for (const schema_file of ["processed-schema.graphql"]) {
+      let testStructOutputFilePath = (destDir + "/test-structs/" + schema_file).replace(".graphql", ".json")
       it('should run without error with file: ' + schema_file, function() {
             setup(destDir, srcDir, schema_file)
-            let testStructOutputFile = schema_file.replace(".graphql", ".json")
-            let testStructOutputFilePath = destDir + "/" + testStructOutputFile
             //autogen.processSchema({}, destDir + "/schema/" + schema_file)
-            autogen.createTestStructs(destDir + "/schema/" + schema_file, testStructOutputFilePath)
+            autogen.createTestStructs({},  destDir + "/schema/" + schema_file, testStructOutputFilePath)
       });
     it('should generate a valid json file'  + schema_file, function() {
-        let testStructOutputFile = schema_file.replace(".graphql", ".json")
-        let testStructOutputFilePath = destDir + "/" + testStructOutputFile
         assert(fs.pathExistsSync(testStructOutputFilePath), true)
         let actual_file = fs.readFileSync(testStructOutputFilePath)
         assert(isJSON(actual_file));
     });
 
     it('should correctly generate testStructs entities', function() {
-      let testStructOutputFile = schema_file.replace(".graphql", ".json")
-      let testStructOutputFilePath = destDir + "/" + testStructOutputFile
       let actual_file = (fs.readFileSync(testStructOutputFilePath)).toString()
       let entityTestStructs = JSON.parse(actual_file)
 

@@ -31,14 +31,13 @@ function canGenerate() {
 
 
 
-function generateProximaApplication(config) {
+function generateProximaApplication(config, test = true) {
   let proximaConfig = yaml.safeLoad(fs.readFileSync('./.proxima.yml', 'utf8'))
   generator.processSchema(config)
   generator.generateApplicationDatabase(config)
   generator.generateProximaVertexClient(config)
   generator.generateHandlers(config)
   generator.generateBlockchainClient(config) //update
-
   //update the app_config
   let proximaConfigText = yaml.safeDump(proximaConfig);
   fs.writeFileSync("./.proxima.yml", proximaConfigText)

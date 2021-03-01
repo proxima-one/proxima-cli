@@ -144,7 +144,7 @@ describe('Proxima CLI', async function() {
       assert(fs.pathExistsSync("./DataVertex/pkg/resolvers/resolver_fns.go"), true)
       assert(hasDataVertexFolder);
       process.chdir("../.")
-      cleanup();
+      //cleanup();
       assert(hasDataVertexMain);
     });
     //application database

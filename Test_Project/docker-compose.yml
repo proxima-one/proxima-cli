@@ -1,0 +1,30 @@
+version: '3'
+services:
+  data_vertex_node:
+    build: ''
+    ports:
+      - '4000:4000'
+    depends_on:
+      - db
+    environment:
+      - DB_ADDRESS=db
+      - DB_PORT=50051
+  db:
+    image: 'chasesmith95/proxima-db-server:latest'
+    restart: unless-stopped
+    volumes:
+      - '/tmp/opt/binance-data:/opt/bnbchaind'
+    ports:
+      - '50051:50051'
+  data_aggregator:
+    build: ./DataAggregator
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+      - '27146:27146'
+      - '27147:27147'
+    depends_on:
+      - data_vertex_node
+    environment:
+      - DATA_VERTEX_NODE_ADDRESS=data_vertex_node
+      - DATA_VERTEX_NODE_PORT=4000

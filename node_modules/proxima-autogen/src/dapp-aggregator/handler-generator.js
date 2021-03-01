@@ -25,6 +25,7 @@ function generateHandlers(abi, outputFolder) {
 }
 
 
+
 module.exports = {generateHandlers}
 
 

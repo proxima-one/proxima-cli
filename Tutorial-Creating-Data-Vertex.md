@@ -175,11 +175,15 @@ proxima run
 
 Congratulations you have a running data vertex! If you want to it locally visit.
 
-- `GraphQL API`: `0.0.0.0:4000`
-- `GraphQL Playground`: `0.0.0.0:4000/query`
+`GraphQL API`: `0.0.0.0:4000`
+
+![](./docs/tutorial-graphql-playground.png)
+<!--
+Image of the Playground
+-->
 
 
 ## Connecting to the project
 Once it is running, we can immediately connect to and receive data from the data vertex through its graphQL server, or through the Proxima SDK. If there is no concern about security it is possible to use your data vertex as a standalone server, but without the SDK it is impossible to authenticate the data given in each request.
 
-If we use the Proxima SDK to connect to a data vertex it is possible to open up a variety of new features, most notably the abiltiy to verifiy and authenticate the data being requested. If you want to learn how to connect to a data vertex through the Proxima SDK check out our tutorial.
+If we use the Proxima SDK to connect to a data vertex it is possible to open up a variety of new features, most notably the ability to verifiy and authenticate the data being requested. If you want to learn how to connect to a data vertex through the Proxima SDK check out our tutorial.

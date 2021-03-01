@@ -1,0 +1,32 @@
+# Creating an Off-chain Data Vertex
+
+
+We are going to be integrating an off-chain datasource, from the CoinGeckoAPI, to enable the creation of a high-frequency oracle solution that uses Chainlink.
+
+
+
+In order to do this we will be using the CoinGeckAPI https://github.com/miscavage/CoinGecko-API
+
+## Installation and Set-up
+
+
+## Creating the data vertex
+
+
+
+
+
+
+## Integrating a datasource
+
+
+//Create Https: client
+
+
+//URL updates
+
+
+
+//
+
+## Running the vertex

@@ -72,6 +72,8 @@ generateEventHandlerText(contractEvent) {
   return eventHandlerString
 }
 
+ 
+
 generateFunctionHandlerText(contractFunction) {
     let functionHandlerString = "\n \n"
     functionHandlerString += "function " + contractFunction.name + "FunctionHandler"

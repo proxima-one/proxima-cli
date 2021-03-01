@@ -14,7 +14,7 @@ datasources:
         network: mainnet
         startBlock: 10634502
       source:
-        address: "0xEB2F0A3045db12366A9f6A8e922D725D86a117EB"
+        address: '0xEB2F0A3045db12366A9f6A8e922D725D86a117EB'
         abi: DInterest
         startBlock: 11172905
       contracts:
@@ -26,3 +26,9 @@ datasources:
           file: ./abi/ERC20.json
         - name: MPHMinter
           file: ./abi/MPHMinter.json
+      handlers:
+        main: ./handlers/cUSDCPool/index.js
+        blockHandler: ./handlers/cUSDCPool/blockHandler.js
+        transactionHandler: ./handlers/cUSDCPool/transactionHandler.js
+        eventHandlers: ./handlers/cUSDCPool/eventHandlers.js
+        functionHandlers: ./handlers/cUSDCPool/functionHandlers.js
