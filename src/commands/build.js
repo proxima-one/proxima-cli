@@ -10,14 +10,21 @@ const { exec } = require("child_process");
 const generator = require('proxima-autogen')
 const msg = require('../common/organization/build_messages.js');
 const dockerComposeFileTemplatePath = require.resolve("../common/templates/docker-compose-data-vertex-template.yml")
+const {updateState, getAppState} = require("../common/config/proximaConfig.js")
 
 
 async function build() {
   msg.BUILD_STARTING_MESSAGE()
-  let config = yaml.safeLoad(fs.readFileSync('./app-config.yml', 'utf8'))
-  let resp = await buildProximaApplication(config)
-  resp = await buildDockerCompose()
-  msg.BUILD_ENDING_MESSAGE()
+  if (canBuild()) {
+
+    let config = yaml.safeLoad(fs.readFileSync('./app-config.yml', 'utf8'))
+    let resp = await buildProximaApplication(config)
+    resp = await buildDockerCompose()
+    msg.BUILD_ENDING_MESSAGE()
+    updateState("Built")
+  } else {
+    msg.BUILD_ERROR_MESSAGE()
+  }
 }
 
 async function buildProximaApplication(config, test = true, local = true) {
@@ -25,9 +32,7 @@ async function buildProximaApplication(config, test = true, local = true) {
   generator.buildDataAggregator(config)
   let resp = await generator.buildDataVertex(config)
   buildDockerCompose(config)
-  if (test) {
-    generator.createTestStructs(config, "", "")
-  }
+
   let proximaConfigText = yaml.safeDump(proximaConfig)
   fs.writeFileSync('./app-config.yml', proximaConfigText);
 }
@@ -39,6 +44,19 @@ async function buildProximaApplication(config, test = true, local = true) {
 //   //ensure directory
 //   generator.createTestStructs(inputSchemaFileName, outputJSONFileName)
 // }
+
+//canBuild
+
+/*
+App Config from proxima
+*/
+function canBuild() {
+  //pregeneration
+  //schema
+  //abi + datasources
+  //
+  return (getAppState() == "Generated")
+}
 
 async function buildDockerCompose() {
   let proximaConfig = yaml.safeLoad(fs.readFileSync('./.proxima.yml', 'utf8'))

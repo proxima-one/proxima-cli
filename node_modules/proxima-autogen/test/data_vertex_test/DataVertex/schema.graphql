@@ -1,0 +1,9 @@
+type Application {
+  id: ID
+  data: String
+}
+
+type Peer {
+  id: ID
+  data: String
+}

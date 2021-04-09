@@ -1,10 +1,9 @@
 'use strict'
 const fs = require('fs-extra');
 const yaml = require('js-yaml');
-const Proxima_Config_Template = require("../common/templates/proximaConfigTemplate.yml")
-
+const proximaConfigTemplate = yaml.safeLoad(fs.readFileSync(require.resolve('../templates/proximaConfigTemplate.yml')))
 //write config
-function writeProximaConfig(location = "./.proxima.yml", file = Proxima_Config_Templates) {
+function writeProximaConfig(location = "./.proxima.yml", file = proximaConfigTemplate) {
   fs.outputFile(location, file, err => {});
 }
 
@@ -16,5 +15,21 @@ function readProximaConfig() {
 
 function getAppConfig() {
   let proximaConfig = readProximaConfig()
-  let appConfig = yaml.safeLoad(fs.readFileSync(proximaConfig.app-config, 'utf8'))
+  let appConfig = yaml.safeLoad(fs.readFileSync(proximaConfig.app_config, 'utf8'))
 }
+
+function getAppState() {
+  let proximaConfig = readProximaConfig()
+  return proximaConfig.state
+}
+
+
+function updateState(newState) {
+  //checkAppState
+  let proximaConfig = readProximaConfig()
+  proximaConfig.state = newState
+  let configText  = yaml.safeDump(proximaConfig)
+  fs.outputFileSync("./.proxima.yml", configText)
+}
+
+module.exports = {updateState, getAppState}

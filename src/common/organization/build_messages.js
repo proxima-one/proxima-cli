@@ -13,7 +13,10 @@ function buildEndingMessage() {
     console.log(chalk.green('Application Built.'))
 }
 
+function runErrorMessage() {
+  console.log(chalk.green('A Proxima project needs to be built here.'))
+}
 
 module.exports = {
-  BUILD_STARTING_MESSAGE: buildStartingMessage, BUILD_ENDING_MESSAGE: buildEndingMessage
+  BUILD_STARTING_MESSAGE: buildStartingMessage, BUILD_ENDING_MESSAGE: buildEndingMessage, BUILD_ERROR_MESSAGE: runErrorMessage
 };

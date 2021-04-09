@@ -6,6 +6,7 @@ const yaml = require('js-yaml');
 const msg = require('../common/organization/init_messages.js');
 const appConfigTemplate = yaml.safeLoad(fse.readFileSync(require.resolve("../common/templates/config-init-template.yml")));
 const proximaConfigTemplate = yaml.safeLoad(fse.readFileSync(require.resolve('../common/templates/proximaConfigTemplate.yml')))
+const {updateState, getAppState} = require("../common/config/proximaConfig.js")
 
 
 /*
@@ -39,7 +40,7 @@ function initProjectFolders(project_name) {
   }
   fse.ensureDirSync(directory + "/schema")
   fse.ensureDirSync(directory + "/abi")
-  return {schema: directory + "/schema", abi: directory + "/abis"}
+  return {schema: directory + "/schema", abi: directory + "/abi"}
 }
 
 function writeConfig(location, project_name, schemaDir, abiDir) {
@@ -61,7 +62,7 @@ function writeConfig(location, project_name, schemaDir, abiDir) {
 }
 
 function isInitialized() {
-  return false//fse.existsSync("./.proxima.yml")
+  return  fse.existsSync("./.proxima.yml")
 }
 
 module.exports = {name: "init [project_name]", fn: init, description: "Initiatlize the project at the correct directory, with the config file, and folders for abi."};

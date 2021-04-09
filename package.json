@@ -1,6 +1,6 @@
 {
   "name": "proxima-cli",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -15,13 +15,30 @@
     "bignumber.js": "^8.1.1",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
+    "ethers": "^5.0.32",
     "fs": "0.0.1-security",
     "fs-extra": "^7.0.1",
+    "graphql": "^15.5.0",
     "graphql-yoga": "^1.17.4",
     "js-yaml": "^3.13.1",
     "mocha": "^8.2.1",
     "process": "^0.11.10",
-    "proxima-autogen": "0.0.23",
+    "proxima-autogen": "0.0.27",
+    "truffle": "^5.2.6",
+    "typescript": "^4.2.3",
     "web3": "^1.0.0-beta.55"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.3",
+    "@graphql-codegen/typescript": "^1.21.1",
+    "@graphql-codegen/typescript-graphql-request": "^3.1.0",
+    "@graphql-codegen/typescript-operations": "^1.17.15",
+    "@typechain/ethers-v4": "^4.0.0",
+    "@typechain/ethers-v5": "^6.0.5",
+    "@typechain/hardhat": "^1.0.1",
+    "@typechain/truffle-v4": "^3.0.0",
+    "@typechain/truffle-v5": "^4.0.1",
+    "@typechain/web3-v1": "^2.2.0",
+    "typechain": "^4.0.3"
   }
 }

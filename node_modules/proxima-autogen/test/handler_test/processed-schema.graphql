@@ -1,0 +1,29 @@
+type Query {
+  getConversionRate(id: ID!, prove: Boolean): ConversionRate
+  ConversionRates(first: Int, last: Int, limit: Int, prove: Boolean): [ConversionRate]
+  searchConversionRates(query: String!, prove: Boolean): [ConversionRate]
+}
+
+type Mutation {
+  putConversionRate(input: ConversionRateInput): Boolean
+}
+
+type ConversionRate  {
+  id: ID!
+  token: String!
+  rateSell: Float!
+  rateBuy: Float!
+  spread: Float!
+  spreadPercent: Float!
+  proof: String
+}
+
+input ConversionRateInput  {
+  id: ID!
+  token: String!
+  rateSell: Float!
+  rateBuy: Float!
+  spread: Float!
+  spreadPercent: Float!
+  proof: String
+}

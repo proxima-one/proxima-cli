@@ -1,0 +1,11 @@
+schema: "schema"
+#documents: 'client/src/**/*.graphql'
+# generates:
+#   plugins:
+#     - add:
+#         content:
+#           - ""
+#     - add:
+#         placement: "append"
+#         content: ""
+#     - typescript

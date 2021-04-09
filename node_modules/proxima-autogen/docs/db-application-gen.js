@@ -13,16 +13,16 @@ function tablesFromSchema(appConfig, schemaFile) {
 }
 
 function application(dbName, config) {
-  let appString =  "application:\n" +
-    "\tname: " + dbName +"\n" +
-    "\tid: " + config.id + "  \n" +
-    "\towner: " + config.owner + "\n" +
-    "\tversion: " + config.version + "\n" +
-    "\tconfig:\n" +
-      "\t\tcache: " + config.cache + "\n" +
-      "\t\tcompression: " + config.compression + "\n" +
-      "\t\tbatching: " + config.batching + "\n" +
-    "\ttables:\n";
+  let appString = "name: " + dbName +"\n" +
+    "id: " + config.id + "  \n" +
+    "owner: " + config.owner + "\n" +
+    "version: " + config.version + "\n" +
+    "config:\n" +
+      "  cache: " + config.cache + "\n" +
+      "  compression: " + config.compression + "\n" +
+      "  batching: " + config.batching + "\n" +
+      "  sleeping: " + config.sleeping + "\n" +
+    "tables:\n";
     return appString;
 }
 

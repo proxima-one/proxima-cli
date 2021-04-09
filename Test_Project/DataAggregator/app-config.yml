@@ -1,34 +1,60 @@
-id: null
+id: ID
 name: Test_Project
-repo: null
-description: null
+repo: Repo
+description: Description
 version: 0.0.0
 schema:
   file: ./schema/schema.graphql
   dir: Test_Project/schema
 datasources:
-  - datasource:
-      name: cUSDCPool
-      client:
-        name: ethereum
-        network: mainnet
-        startBlock: 10634502
-      source:
-        address: '0xEB2F0A3045db12366A9f6A8e922D725D86a117EB'
-        abi: DInterest
-        startBlock: 11172905
-      contracts:
-        - name: DInterest
-          file: ./abi/DInterest.json
-        - name: IInterestOracle
-          file: ./abi/IInterestOracle.json
-        - name: ERC20
-          file: ./abi/ERC20.json
-        - name: MPHMinter
-          file: ./abi/MPHMinter.json
-      handlers:
-        main: ./handlers/cUSDCPool/index.js
-        blockHandler: ./handlers/cUSDCPool/blockHandler.js
-        transactionHandler: ./handlers/cUSDCPool/transactionHandler.js
-        eventHandlers: ./handlers/cUSDCPool/eventHandlers.js
-        functionHandlers: ./handlers/cUSDCPool/functionHandlers.js
+  - name: cUSDCPool
+    client:
+      name: ethereum
+      network: mainnet
+      startBlock: 10634502
+    source:
+      address: '0xEB2F0A3045db12366A9f6A8e922D725D86a117EB'
+      abi: DInterest
+      startBlock: 11172905
+    contracts:
+      - name: DInterest
+        file: ./abi/DInterest.json
+      - name: IInterestOracle
+        file: ./abi/IInterestOracle.json
+      - name: ERC20
+        file: ./abi/ERC20.json
+      - name: MPHMinter
+        file: ./abi/MPHMinter.json
+    entities:
+      - BigDecimal
+      - BigInt
+      - Query
+      - Mutation
+      - DPoolList
+      - DPoolListInput
+      - DPool
+      - DPoolInput
+      - User
+      - UserInput
+      - UserTotalDeposit
+      - UserTotalDepositInput
+      - Deposit
+      - DepositInput
+      - Funder
+      - FunderInput
+      - FunderTotalInterest
+      - FunderTotalInterestInput
+      - Funding
+      - FundingInput
+      - MPHHolder
+      - MPHHolderInput
+      - MPH
+      - MPHInput
+      - Proof
+      - useDefaultArgs
+      - hasRole
+      - hasAuthentication
+      - goField
+      - Role
+    handlers:
+      main: ./handlers/cUSDCPool.ts

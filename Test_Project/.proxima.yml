@@ -1,7 +1,8 @@
 name: Test_Project
 app_config: app-config.yml
 blockchain_client: ''
-vertex_client: ''
+proxima_sdk_vertex_client: ''
 data_aggregator: ./DataAggregator
 data_vertex_node: ''
 database: ''
+state: Generated

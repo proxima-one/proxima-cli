@@ -53,3 +53,21 @@ models:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
+  Float:
+    model:
+      - github.com/99designs/gqlgen/graphql.Float
+  Time:
+    model:
+      - github.com/99designs/gqlgen/graphql.Time
+  Address:
+    model:
+      - github.com/99designs/gqlgen/graphql.String
+  Upload:
+    model:
+      - github.com/99designs/gqlgen/graphql.Upload
+  # JSON:
+  #   model:
+  #     - github.com/99designs/gqlgen/graphql.
+
+#uint
+#BigInt

@@ -1,0 +1,317 @@
+type Query {
+DPoolList(id: ID!, prove: Boolean): DPoolList!
+DPoolLists(first: Int, last: Int, limit: Int, prove: Boolean): [DPoolList!]!
+DPoolLists(queryString: String!, prove: Boolean): [DPoolList!]!
+DPool(id: ID!, prove: Boolean): DPool!
+DPools(first: Int, last: Int, limit: Int, prove: Boolean): [DPool!]!
+DPools(queryString: String!, prove: Boolean): [DPool!]!
+User(id: ID!, prove: Boolean): User!
+Users(first: Int, last: Int, limit: Int, prove: Boolean): [User!]!
+Users(queryString: String!, prove: Boolean): [User!]!
+UserTotalDeposit(id: ID!, prove: Boolean): UserTotalDeposit!
+UserTotalDeposits(first: Int, last: Int, limit: Int, prove: Boolean): [UserTotalDeposit!]!
+UserTotalDeposits(queryString: String!, prove: Boolean): [UserTotalDeposit!]!
+Deposit(id: ID!, prove: Boolean): Deposit!
+Deposits(first: Int, last: Int, limit: Int, prove: Boolean): [Deposit!]!
+Deposits(queryString: String!, prove: Boolean): [Deposit!]!
+Funder(id: ID!, prove: Boolean): Funder!
+Funders(first: Int, last: Int, limit: Int, prove: Boolean): [Funder!]!
+Funders(queryString: String!, prove: Boolean): [Funder!]!
+FunderTotalInterest(id: ID!, prove: Boolean): FunderTotalInterest!
+FunderTotalInterests(first: Int, last: Int, limit: Int, prove: Boolean): [FunderTotalInterest!]!
+FunderTotalInterests(queryString: String!, prove: Boolean): [FunderTotalInterest!]!
+Funding(id: ID!, prove: Boolean): Funding!
+Fundings(first: Int, last: Int, limit: Int, prove: Boolean): [Funding!]!
+Fundings(queryString: String!, prove: Boolean): [Funding!]!
+MPHHolder(id: ID!, prove: Boolean): MPHHolder!
+MPHHolders(first: Int, last: Int, limit: Int, prove: Boolean): [MPHHolder!]!
+MPHHolders(queryString: String!, prove: Boolean): [MPHHolder!]!
+MPH(id: ID!, prove: Boolean): MPH!
+MPHs(first: Int, last: Int, limit: Int, prove: Boolean): [MPH!]!
+MPHs(queryString: String!, prove: Boolean): [MPH!]!
+
+}
+
+type Mutation {
+putDPoolList(input: DPoolListInput!): Boolean
+putDPool(input: DPoolInput!): Boolean
+putUser(input: UserInput!): Boolean
+putUserTotalDeposit(input: UserTotalDepositInput!): Boolean
+putDeposit(input: DepositInput!): Boolean
+putFunder(input: FunderInput!): Boolean
+putFunderTotalInterest(input: FunderTotalInterestInput!): Boolean
+putFunding(input: FundingInput!): Boolean
+putMPHHolder(input: MPHHolderInput!): Boolean
+putMPH(input: MPHInput!): Boolean
+
+}
+
+type DPoolList {
+id: ID
+pools: [DPool]
+numPools: String
+numUsers: String
+numActiveUsers: String
+numFunders: String
+}
+
+input DPoolListInput {
+id: ID
+pools: [DPool]
+numPools: String
+numUsers: String
+numActiveUsers: String
+numFunders: String
+}
+
+type DPool {
+id: ID
+String: String
+moneyMarket: String
+stablecoin: String
+interestModel: String
+users: [User]
+numUsers: String
+deposits: [Deposit]
+numDeposits: String
+numActiveDeposits: String
+totalActiveDeposit: String
+totalHistoricalDeposit: String
+totalInterestPaid: String
+unfundedDepositAmount: String
+funders: [Funder]
+numFunders: String
+fundings: [Funding]
+numFundings: String
+MinDepositPeriod: String
+MaxDepositPeriod: String
+MinDepositAmount: String
+MaxDepositAmount: String
+mphMintingMultiplier: String
+mphDepositorRewardMultiplier: String
+mphFunderRewardMultiplier: String
+oneYearInterestRate: String
+surplus: String
+moneyMarketIncomeIndex: String
+oracleInterestRate: String
+}
+
+input DPoolInput {
+id: ID
+String: String
+moneyMarket: String
+stablecoin: String
+interestModel: String
+users: [User]
+numUsers: String
+deposits: [Deposit]
+numDeposits: String
+numActiveDeposits: String
+totalActiveDeposit: String
+totalHistoricalDeposit: String
+totalInterestPaid: String
+unfundedDepositAmount: String
+funders: [Funder]
+numFunders: String
+fundings: [Funding]
+numFundings: String
+MinDepositPeriod: String
+MaxDepositPeriod: String
+MinDepositAmount: String
+MaxDepositAmount: String
+mphMintingMultiplier: String
+mphDepositorRewardMultiplier: String
+mphFunderRewardMultiplier: String
+oneYearInterestRate: String
+surplus: String
+moneyMarketIncomeIndex: String
+oracleInterestRate: String
+}
+
+type User {
+id: ID
+String: String
+pools: [DPool]
+numPools: String
+deposits: [Deposit]
+numDeposits: String
+numActiveDeposits: String
+totalDepositByPool: [UserTotalDeposit]
+totalMPHEarned: String
+totalMPHPaidBack: String
+}
+
+input UserInput {
+id: ID
+String: String
+pools: [DPool]
+numPools: String
+deposits: [Deposit]
+numDeposits: String
+numActiveDeposits: String
+totalDepositByPool: [UserTotalDeposit]
+totalMPHEarned: String
+totalMPHPaidBack: String
+}
+
+type UserTotalDeposit {
+id: ID
+user: User
+pool: DPool
+totalActiveDeposit: String
+totalHistoricalDeposit: String
+totalInterestEarned: String
+totalHistoricalInterestEarned: String
+}
+
+input UserTotalDepositInput {
+id: ID
+user: User
+pool: DPool
+totalActiveDeposit: String
+totalHistoricalDeposit: String
+totalInterestEarned: String
+totalHistoricalInterestEarned: String
+}
+
+type Deposit {
+id: ID
+nftID: String
+user: User
+pool: DPool
+amount: String
+maturationTimestamp: String
+active: Boolean
+depositTimestamp: String
+interestEarned: String
+fundingID: String
+mintMPHAmount: String
+takeBackMPHAmount: String
+initialMoneyMarketIncomeIndex: String
+}
+
+input DepositInput {
+id: ID
+nftID: String
+user: User
+pool: DPool
+amount: String
+maturationTimestamp: String
+active: Boolean
+depositTimestamp: String
+interestEarned: String
+fundingID: String
+mintMPHAmount: String
+takeBackMPHAmount: String
+initialMoneyMarketIncomeIndex: String
+}
+
+type Funder {
+id: ID
+String: String
+pools: [DPool]
+numPools: String
+fundings: [Funding]
+numFundings: String
+totalMPHEarned: String
+totalInterestByPool: [FunderTotalInterest]
+}
+
+input FunderInput {
+id: ID
+String: String
+pools: [DPool]
+numPools: String
+fundings: [Funding]
+numFundings: String
+totalMPHEarned: String
+totalInterestByPool: [FunderTotalInterest]
+}
+
+type FunderTotalInterest {
+id: ID
+funder: Funder
+pool: DPool
+totalDeficitFunded: String
+totalHistoricalDeficitFunded: String
+totalInterestEarned: String
+totalHistoricalInterestEarned: String
+totalRecordedFundedDepositAmount: String
+}
+
+input FunderTotalInterestInput {
+id: ID
+funder: Funder
+pool: DPool
+totalDeficitFunded: String
+totalHistoricalDeficitFunded: String
+totalInterestEarned: String
+totalHistoricalInterestEarned: String
+totalRecordedFundedDepositAmount: String
+}
+
+type Funding {
+id: ID
+nftID: String
+funder: Funder
+pool: DPool
+fromDepositID: String
+toDepositID: String
+active: Boolean
+recordedFundedDepositAmount: String
+recordedMoneyMarketIncomeIndex: String
+initialFundedDepositAmount: String
+fundedDeficitAmount: String
+totalInterestEarned: String
+mintMPHAmount: String
+}
+
+input FundingInput {
+id: ID
+nftID: String
+funder: Funder
+pool: DPool
+fromDepositID: String
+toDepositID: String
+active: Boolean
+recordedFundedDepositAmount: String
+recordedMoneyMarketIncomeIndex: String
+initialFundedDepositAmount: String
+fundedDeficitAmount: String
+totalInterestEarned: String
+mintMPHAmount: String
+}
+
+type MPHHolder {
+id: ID
+String: String
+mphBalance: String
+stakedMPHBalance: String
+totalHistoricalReward: String
+}
+
+input MPHHolderInput {
+id: ID
+String: String
+mphBalance: String
+stakedMPHBalance: String
+totalHistoricalReward: String
+}
+
+type MPH {
+id: ID
+totalSupply: String
+totalStakedMPHBalance: String
+totalHistoricalReward: String
+rewardPerSecond: String
+rewardPerMPHPerSecond: String
+}
+
+input MPHInput {
+id: ID
+totalSupply: String
+totalStakedMPHBalance: String
+totalHistoricalReward: String
+rewardPerSecond: String
+rewardPerMPHPerSecond: String
+}

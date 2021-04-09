@@ -6,7 +6,23 @@ const path = require('path');
 
 
 async function deploy() {
-  console.log("Not implemented.")
+  msg.DEPLOY_STARTING_MESSAGE();
+  if (canDeploy()) {
+    console.log("Not implemented.")
+  }  else {
+    msg.DEPLOY_ERROR_MSG()
+  }
+}
+
+/*
+App Config from proxima
+*/
+function canDeploy() {
+  //pregeneration
+  //schema
+  //abi + datasources
+  //
+  return (getAppState() == "Built")
 }
 
 

@@ -1,4 +1,4 @@
-type DPoolList @entity {
+type DPoolList {
   id: ID!
   pools: [DPool!]!
   numPools: String!
@@ -7,7 +7,7 @@ type DPoolList @entity {
   numFunders: String!
 }
 
-type DPool @entity {
+type DPool {
   id: ID!
   address: String!
   moneyMarket: String!
